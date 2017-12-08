@@ -15,4 +15,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/menuButton" />
+
+    <Button
+        android:id="@+id/EventiButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/eventiButton" />
+
 </RelativeLayout>

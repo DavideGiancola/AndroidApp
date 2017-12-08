@@ -17,4 +17,22 @@
         android:layout_height="wrap_content"
         android:text="SUBTITLE"/>
 
+    <TextView
+        android:id="@+id/customadapter_text_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DESCRIPTION"/>
+
+    <TextView
+        android:id="@+id/customadapter_sub_description1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SUBDESCRIPTION1"/>
+
+    <TextView
+        android:id="@+id/customadapter_sub_description2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SUBDESCRIPTION2"/>
+
 </LinearLayout>
