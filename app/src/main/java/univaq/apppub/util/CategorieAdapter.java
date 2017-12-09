@@ -33,7 +33,6 @@ public class CategorieAdapter extends RecyclerView.Adapter<CategorieAdapter.View
             super(v);
             mNome = (TextView) v.findViewById(R.id.nome);
             mThumbnail = (ImageView) v.findViewById(R.id.thumbnail);
-
         }
     }
 

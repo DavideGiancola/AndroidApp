@@ -1,11 +1,16 @@
 package univaq.apppub.controller;
 
 import android.app.Activity;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +31,7 @@ public class CategorieActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categorie);
 
-
+        initCollapsingToolbar();
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerCategorie);
@@ -46,6 +51,42 @@ public class CategorieActivity extends Activity {
 
         CostruisciCategorie();
 
+        try {
+            Glide.with(this).load(R.drawable.cover).into((ImageView) findViewById(R.id.backdrop));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void initCollapsingToolbar() {
+        final CollapsingToolbarLayout collapsingToolbar =
+                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitle(" ");
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        appBarLayout.setExpanded(true);
+
+        // hiding & showing the title when toolbar expanded & collapsed
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                    collapsingToolbar.setTitle("Categorie");
+                    isShow = true;
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbar.setTitle("Categorie");
+                    isShow = true;
+                } else if (isShow) {
+                    collapsingToolbar.setTitle("Categorie");
+                    isShow = false;
+                }
+            }
+        });
     }
 
 
@@ -70,6 +111,8 @@ public class CategorieActivity extends Activity {
         a = new Categoria("Bevande","Bevande",img[0]);
         Categorie.add(a);
         a = new Categoria("Alcolici","alcolici",img[5]);
+        Categorie.add(a);
+        a = new Categoria("Prova","alcolici",img[2]);
         Categorie.add(a);
 
         mAdapter.notifyDataSetChanged();

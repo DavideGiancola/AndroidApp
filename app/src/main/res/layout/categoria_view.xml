@@ -13,29 +13,32 @@
         card_view:cardCornerRadius="@dimen/card_album_radius">
 
         <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/relativelayout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+        <ImageView
+            android:id="@+id/thumbnail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/thumbnail"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/album_cover_height"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:scaleType="fitXY" />
+            android:layout_height="@dimen/album_cover_height"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:scaleType="fitXY" />
 
             <TextView
                 android:id="@+id/nome"
                 android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thumbnail"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/card_color"
                 android:paddingLeft="@dimen/categoria_nome_padding"
                 android:paddingRight="@dimen/categoria_nome_padding"
                 android:paddingTop="2dp"
-                android:textColor="@color/album_title"
-                android:textSize="@dimen/album_title" />
-
-
+                android:textColor="@color/categorie_title"
+                android:textSize="@dimen/categoria_title" />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
