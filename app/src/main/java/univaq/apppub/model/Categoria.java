@@ -11,22 +11,13 @@ public class Categoria {
     private String nome;
     private String Descrizione;
     private ArrayList<Piatto> Piatti;
+    private int img;
 
-    public Categoria(String nome, String descrizione, int thumbnail) {
+    public Categoria(String nome, String descrizione, int img) {
         this.nome = nome;
         Descrizione = descrizione;
-        this.thumbnail = thumbnail;
+        this.img = img;
     }
-
-    public int getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(int thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    private int thumbnail;
 
     public String getNome() {
         return nome;
@@ -50,5 +41,13 @@ public class Categoria {
 
     public void setPiatti(ArrayList<Piatto> piatti) {
         Piatti = piatti;
+    }
+
+    public int getImg() {
+        return img;
+    }
+
+    public void setImg(int img) {
+        this.img = img;
     }
 }

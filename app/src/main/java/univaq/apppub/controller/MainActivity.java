@@ -6,12 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.List;
+
 import univaq.apppub.R;
+import univaq.apppub.model.Categoria;
+import univaq.apppub.util.CategorieAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button mButtonEventi;
     private Button mButtonMenu;
+
+
 
 
     @Override
@@ -39,4 +45,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 }
