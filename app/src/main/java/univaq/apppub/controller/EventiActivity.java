@@ -22,6 +22,18 @@ public class EventiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eventi);
 
+        List<Evento> eventi = getEventi();
+
+
+        mList = (RecyclerView) findViewById(R.id.my_recycler_view);
+
+
+        mList.setLayoutManager(new LinearLayoutManager(EventiActivity.this));
+        System.out.println("ciao");
+
+        EventiAdapter adapter = new EventiAdapter(eventi);
+        mList.setAdapter(adapter);
+
     }
 
 
