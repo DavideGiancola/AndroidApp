@@ -5,4 +5,35 @@
         <item >Stuzzichini</item>
         <item >Birre</item>
     </string-array>
+
+    <string-array name="array_nomi">
+        <item>Evento 1</item>
+        <item>Evento 2</item>
+        <item>Evento 3</item>
+    </string-array>
+
+    <string-array name="array_data">
+        <item>Oggi</item>
+        <item>Domani</item>
+        <item>Dopodomani</item>
+    </string-array>
+
+    <string-array name="array_ora_inizio">
+        <item>Dalle 3</item>
+        <item>Dalle 4</item>
+        <item>Dalle 5</item>
+    </string-array>
+
+    <string-array name="array_ora_fine">
+        <item>Alle 5</item>
+        <item>Alle 6</item>
+        <item>Alle 7</item>
+    </string-array>
+
+    <string-array name="array_descrizione">
+        <item>Bello</item>
+        <item>Brtto</item>
+        <item>Non lo so</item>
+    </string-array>
+
 </resources>
