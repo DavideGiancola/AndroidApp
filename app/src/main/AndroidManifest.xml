@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".controller.EventiActivity" />
         <activity android:name=".controller.CategorieActivity"></activity>
+
     </application>
 
 </manifest>

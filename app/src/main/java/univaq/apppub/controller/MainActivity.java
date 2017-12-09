@@ -10,8 +10,10 @@ import univaq.apppub.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button mButtonMenu;
     private Button mButtonEventi;
+    private Button mButtonMenu;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,11 +28,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         mButtonEventi=(Button) findViewById(R.id.EventiButton);
         mButtonEventi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CategorieActivity.class);
+                Intent intent = new Intent(getApplicationContext(), EventiActivity.class);
                 startActivity(intent);
             }
         });

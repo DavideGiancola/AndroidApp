@@ -2,4 +2,10 @@
     <string name="app_name">AppPub</string>
     <string name="menuButton">Menù</string>
     <string name="eventiButton">Eventi</string>
+
+    <string name="nome">Nome</string>
+    <string name="data">Data</string>
+    <string name="oraInizio">OraInizio</string>
+    <string name="oraFine">OraFine</string>
+    <string name="descrizione">Descrizione</string>
 </resources>

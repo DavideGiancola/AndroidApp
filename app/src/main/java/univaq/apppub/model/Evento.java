@@ -15,6 +15,14 @@ public class Evento {
     private String oraFine;
     private String descrizione;
 
+    public Evento(String nome, String data, String oraInizio, String oraFine, String descrizione) {
+        this.nome = nome;
+        this.data = data;
+        this.oraInizio = oraInizio;
+        this.oraFine = oraFine;
+        this.descrizione = descrizione;
+    }
+
     public String getNome() {
         return nome;
     }
