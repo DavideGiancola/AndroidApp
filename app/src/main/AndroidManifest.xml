@@ -18,8 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.CategorieMenu" />
-        <activity android:name=".controller.EventiActivity"></activity>
+        <activity android:name=".controller.EventiActivity" />
+        <activity android:name=".controller.CategorieActivity"></activity>
     </application>
 
 </manifest>

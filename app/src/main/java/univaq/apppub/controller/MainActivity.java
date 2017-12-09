@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         mButtonMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CategorieMenu.class);
+                Intent intent = new Intent(getApplicationContext(), CategorieActivity.class);
                 startActivity(intent);
             }
         });
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         mButtonEventi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CategorieMenu.class);
+                Intent intent = new Intent(getApplicationContext(), CategorieActivity.class);
                 startActivity(intent);
             }
         });
