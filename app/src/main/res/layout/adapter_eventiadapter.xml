@@ -1,55 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    android:background="@color/card_color"
+    android:padding="16dp">
 
+    <ImageView
+        android:id="@+id/imamagineEvento"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/customadapter_text_nome"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/nome"/>
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:ellipsize="end"
+        android:ems="10"
+        android:maxLines="1"
+        android:singleLine="false"
+        android:text="@string/nome"
+        android:textColor="@color/categorie_title"
+        android:textSize="@dimen/testo"
+        app:layout_constraintBottom_toTopOf="@+id/customadapter_text_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imamagineEvento"
+        app:layout_constraintTop_toTopOf="@+id/imamagineEvento" />
 
     <TextView
         android:id="@+id/customadapter_text_data"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:text="@string/data"/>
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:text="@string/data"
+        android:textColor="@color/categorie_title"
+        android:textSize="@dimen/testo"
+        app:layout_constraintBottom_toTopOf="@+id/customadapter_text_ora_inizio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imamagineEvento"
+        app:layout_constraintTop_toBottomOf="@+id/customadapter_text_nome" />
 
     <TextView
         android:id="@+id/customadapter_text_ora_inizio"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:text="@string/oraInizio"/>
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:text="@string/oraInizio"
+        android:textColor="@color/categorie_title"
+        android:textSize="@dimen/testo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imamagineEvento"
+        app:layout_constraintTop_toBottomOf="@+id/customadapter_text_data" />
 
-    <TextView
-        android:id="@+id/customadapter_text_ora_fine"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:text="@string/oraFine"/>
-
-    <TextView
-        android:id="@+id/customadapter_text_descrizione"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:text="@string/descrizione"/>
-
-
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
