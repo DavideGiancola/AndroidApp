@@ -1,19 +1,20 @@
 package univaq.apppub.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import univaq.apppub.R;
+import univaq.apppub.controller.EventiDettaglioActivity;
 import univaq.apppub.model.Evento;
 
 /**
@@ -54,6 +55,7 @@ public class EventiAdapter extends RecyclerView.Adapter<EventiAdapter.ViewHolder
         return mEventi.size();
     }
 
+
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView nome, data, oraInizio, oraFine, descrizione;
@@ -76,8 +78,11 @@ public class EventiAdapter extends RecyclerView.Adapter<EventiAdapter.ViewHolder
         public void onClick(View view) {
 
             //Toast.makeText(view.getContext(), title.getText() + " | " + subtitle.getText(), Toast.LENGTH_SHORT).show();
-            Toast.makeText(view.getContext()," Ciao ", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(view.getContext()," Ciao ", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(view.getContext(),EventiDettaglioActivity.class);
+            view.getContext().startActivity(intent);
         }
+
 
 
     }
