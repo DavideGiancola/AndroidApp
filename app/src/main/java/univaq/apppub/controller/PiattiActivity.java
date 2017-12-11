@@ -1,15 +1,12 @@
 package univaq.apppub.controller;
 
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -17,9 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import univaq.apppub.R;
-import univaq.apppub.model.Categoria;
 import univaq.apppub.model.Piatto;
-import univaq.apppub.util.CategorieAdapter;
 import univaq.apppub.util.Foundation.MySQLiteHelper;
 import univaq.apppub.util.PiattiAdapter;
 
@@ -29,6 +24,7 @@ public class PiattiActivity extends AppCompatActivity implements PiattiAdapter.I
     private PiattiAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Piatto> Piatti;
+    private int categoria_id;
 
 
     @Override
@@ -60,13 +56,17 @@ public class PiattiActivity extends AppCompatActivity implements PiattiAdapter.I
         Bundle extras = getIntent().getExtras();
         // prendi dati dal db
         MySQLiteHelper db = new MySQLiteHelper(this);
-        Piatti.addAll(db.getPiatti(Integer.parseInt(extras.get("id").toString())));
+        categoria_id = Integer.parseInt(extras.get("id").toString());
+        Piatti.addAll(db.getPiatti(categoria_id));
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onItemClick(View view, Piatto piatto) {
+        Intent intent = new Intent(getApplicationContext(), PiattiDettaglioActivity.class);
+        intent.putExtra("id_piatto",String.valueOf(piatto.getId()));
+        intent.putExtra("id_categoria",categoria_id);
+        startActivity(intent);
 
-        System.out.println("qui");
     }
 }

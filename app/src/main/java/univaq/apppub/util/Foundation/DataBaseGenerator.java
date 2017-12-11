@@ -55,7 +55,8 @@ public class DataBaseGenerator {
     private void addPiatti(Categoria categoria){
 
         for (int i=0; i< 10; i++){
-            Piatto piatto = new Piatto(i,categoria.getNome()+1,"descrizione"+1,R.drawable.categoria3);
+            String cat = categoria.getNome() +" "+ String.valueOf(i);
+            Piatto piatto = new Piatto(i,cat,"descrizione"+1,R.drawable.categoria3);
             categoria.aggiungiPiatto(piatto);
         }
 
