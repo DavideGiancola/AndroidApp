@@ -45,6 +45,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 "descrizione TEXT," +
                 "img INTEGER," +
                 "id_categoria INTEGER," +
+                "prezzo REAL," +
                 " FOREIGN KEY(id_categoria) REFERENCES categorie(id))";
 
 
@@ -80,6 +81,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 valuesPiatto.put("descrizione",piatto.getDescrizione());
                 valuesPiatto.put("img",piatto.getImg());
                 valuesPiatto.put("id_categoria",categoria.getId());
+                valuesPiatto.put("prezzo",piatto.getPrezzo());
                 db.insert("piatti",null,valuesPiatto);
                 valuesPiatto.clear();
             }
@@ -148,10 +150,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 piatto = new Piatto();
-                piatto.setId(Integer.parseInt(cursor.getString(0)));
+                piatto.setId(cursor.getInt(0));
                 piatto.setNome(cursor.getString(1));
                 piatto.setDescrizione(cursor.getString(2));
-                piatto.setImg(Integer.parseInt(cursor.getString(3)));
+                piatto.setImg(cursor.getInt(3));
+                piatto.setPrezzo(cursor.getDouble(5));
 
                 piatti.add(piatto);
             } while (cursor.moveToNext());
