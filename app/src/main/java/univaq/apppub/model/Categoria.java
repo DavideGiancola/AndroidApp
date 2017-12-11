@@ -8,15 +8,21 @@ import java.util.ArrayList;
 
 public class Categoria {
 
+    private int id;
     private String nome;
     private String Descrizione;
     private ArrayList<Piatto> Piatti;
     private int img;
 
-    public Categoria(String nome, String descrizione, int img) {
+    public Categoria(int id,String nome, String descrizione, int img) {
+        this.id = id;
         this.nome = nome;
         Descrizione = descrizione;
         this.img = img;
+        this.Piatti = new ArrayList<>();
+    }
+    public Categoria(){
+
     }
 
     public String getNome() {
@@ -50,4 +56,18 @@ public class Categoria {
     public void setImg(int img) {
         this.img = img;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    public void aggiungiPiatto(Piatto piatto){
+        this.Piatti.add(piatto);
+    }
+
 }

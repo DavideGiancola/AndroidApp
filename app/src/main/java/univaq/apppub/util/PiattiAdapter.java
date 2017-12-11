@@ -1,7 +1,6 @@
 package univaq.apppub.util;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,17 +14,15 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import univaq.apppub.R;
-import univaq.apppub.controller.CategorieActivity;
-import univaq.apppub.model.Categoria;
 import univaq.apppub.model.Piatto;
 
 /**
- * Created by Gioele on 09/12/2017.
+ * Created by Gioele on 10/12/2017.
  */
 
-public class CategorieAdapter extends RecyclerView.Adapter<CategorieAdapter.ViewHolder> {
+public class PiattiAdapter extends RecyclerView.Adapter<PiattiAdapter.ViewHolder> {
     private Context mContext;
-    private List<Categoria> CategoriaList;
+    private List<Piatto> PiattiList;
     private ItemClickListener mClickListener;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -43,50 +40,49 @@ public class CategorieAdapter extends RecyclerView.Adapter<CategorieAdapter.View
 
     }
 
-    public CategorieAdapter(Context mContext, List<Categoria> CategoriaList) {
+    public PiattiAdapter(Context mContext, List<Piatto> piattoList) {
         this.mContext = mContext;
-        this.CategoriaList = CategoriaList;
-    }
+        this.PiattiList = piattoList;
 
-
-    @Override
-    public CategorieAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.categoria_view, parent, false);
-        return new CategorieAdapter.ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final CategorieAdapter.ViewHolder holder, final int position) {
-        final Categoria categoria = CategoriaList.get(position);
-        holder.mNome.setText(categoria.getNome());
-        Glide.with(mContext).load(categoria.getImg()).into(holder.mThumbnail);
+    public PiattiAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.piatti_view, parent, false);
+        return new PiattiAdapter.ViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(PiattiAdapter.ViewHolder holder, int position) {
+        final Piatto piatto = PiattiList.get(position);
+        holder.mNome.setText(piatto.getNome());
+        Glide.with(mContext).load(piatto.getImg()).into(holder.mThumbnail);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             // rilevo il click su una card specifica
             public void onClick(View view) {
                 //passo l'evento click all'activity che gestisce l'adapter
-                if (mClickListener != null) mClickListener.onItemClick(view, categoria);
+                if (mClickListener != null) mClickListener.onItemClick(view, piatto);
             }
         });
 
     }
-
-
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, Categoria categoria);
+        void onItemClick(View view, Piatto piatto);
     }
 
     @Override
     public int getItemCount() {
-        return CategoriaList.size();
+            return PiattiList.size();
     }
 
-    // setto il listner all click
     public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
+
+
 
 
 }

@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.List;
-
 import univaq.apppub.R;
-import univaq.apppub.model.Categoria;
-import univaq.apppub.util.CategorieAdapter;
+import univaq.apppub.util.Foundation.DataBaseGenerator;
+import univaq.apppub.util.Foundation.MySQLiteHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,8 +20,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         mButtonMenu=(Button) findViewById(R.id.MenuButton);
         mButtonMenu.setOnClickListener(new View.OnClickListener() {

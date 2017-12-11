@@ -14,12 +14,13 @@
         <activity android:name=".controller.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".controller.EventiActivity" />
-        <activity android:name=".controller.CategorieActivity"></activity>
+        <activity android:name=".controller.CategorieActivity" />
+        <activity android:name=".controller.PiattiActivity" />
+
 
     </application>
 

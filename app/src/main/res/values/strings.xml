@@ -8,4 +8,6 @@
     <string name="oraInizio">OraInizio</string>
     <string name="oraFine">OraFine</string>
     <string name="descrizione">Descrizione</string>
+    <string name="menu">Menù</string>
+    <string name="piatti">Piatti</string>
 </resources>
