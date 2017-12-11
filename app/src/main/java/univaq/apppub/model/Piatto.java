@@ -11,16 +11,27 @@ public class Piatto {
     String descrizione;
     int img;
 
-    public Piatto(int id, String nome, String descrizione, int img) {
+
+    double prezzo;
+
+    public Piatto(int id, String nome, String descrizione, int img,double prezzo) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
         this.img = img;
+        this.prezzo = prezzo;
     }
 
     public Piatto() {
     }
 
+    public double getPrezzo() {
+        return prezzo;
+    }
+
+    public void setPrezzo(double prezzo) {
+        this.prezzo = prezzo;
+    }
 
     public int getId() {
         return id;

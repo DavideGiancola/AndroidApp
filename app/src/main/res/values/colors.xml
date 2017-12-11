@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#100F03</color>
+    <color name="colorPrimary">#100f03</color>
     <color name="colorPrimaryDark">#1D1A05</color>
     <color name="colorAccent">#302428</color>
 
     <color name="viewBg">#f1f5f8</color>
-    <color name="categorie_title">#FFFBBD</color>
+    <color name="categorie_title">#fffbbd</color>
     <color name="card_color">#DF464332</color>
 </resources>

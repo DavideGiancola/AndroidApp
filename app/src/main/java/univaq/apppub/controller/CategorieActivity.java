@@ -52,37 +52,7 @@ public class CategorieActivity extends Activity implements CategorieAdapter.Item
             e.printStackTrace();
         }
     }
-/*
-    private void initCollapsingToolbar() {
-        final CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle("");
-        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        appBarLayout.setExpanded(true);
 
-        // hiding & showing the title when toolbar expanded & collapsed
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
-            int scrollRange = -1;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                    collapsingToolbar.setTitle("Menù");
-                    isShow = true;
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.setTitle("Menù");
-                    isShow = true;
-                } else if (isShow) {
-                    collapsingToolbar.setTitle("Menù");
-                    isShow = false;
-                }
-            }
-        });
-    }
-*/
     private void CostruisciCategorie(){
         MySQLiteHelper db = new MySQLiteHelper(this);
         Categorie.addAll(db.getCategorie());

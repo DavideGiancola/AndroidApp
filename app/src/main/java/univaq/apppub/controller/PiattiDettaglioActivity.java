@@ -11,7 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +47,10 @@ public class PiattiDettaglioActivity extends AppCompatActivity {
 
         mSectionsPagerAdapter = new PiattiDettaglioActivity.SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
+
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setCurrentItem(piatto_selezionato_id-1);
+
         //recupero i dati dalla precedente activity
 
 
@@ -55,34 +61,11 @@ public class PiattiDettaglioActivity extends AppCompatActivity {
 
         // prendi dati dal db
         MySQLiteHelper db = new MySQLiteHelper(this);
-        System.out.println(categoria_piatto_id);
         Piatti.addAll(db.getPiatti(categoria_piatto_id));
 
-        List<Piatto> PiattiOrdinati = new ArrayList<>();
-        for (Piatto piatto:Piatti) {
-            if(piatto.getId() == piatto_selezionato_id){
-                System.out.println("Trovato");
-                PiattiOrdinati.add(piatto);
-            }
-        }
-        for (Piatto piatto:Piatti) {
-            if(piatto.getId() != piatto_selezionato_id){
-                PiattiOrdinati.add(piatto);
-            }
-        }
-
-        for (Piatto piatto:PiattiOrdinati) {
-            System.out.println(piatto.getNome());
-        }
-
-
-        Piatti.clear();
-        Piatti.addAll(PiattiOrdinati);
     }
 
     public static class PlaceholderFragment extends Fragment {
-
-        private static final String ARG_SECTION_NUMBER = "section_number";
 
         public PlaceholderFragment() {
         }
@@ -91,17 +74,36 @@ public class PiattiDettaglioActivity extends AppCompatActivity {
             PiattiDettaglioActivity.PlaceholderFragment fragment = new PiattiDettaglioActivity.PlaceholderFragment();
             Bundle args = new Bundle();
             args.putString("nome",piatti.get(sectionNumber).getNome());
+            args.putString("descrizione",piatti.get(sectionNumber).getDescrizione());
+            args.putString("img",String.valueOf(piatti.get(sectionNumber).getImg()));
+            args.putString("prezzo",String.valueOf(piatti.get(sectionNumber).getPrezzo()));
+
             fragment.setArguments(args);
             return fragment;
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            Bundle args = getArguments();
-            String nome = args.getString("nome");
             View rootView = inflater.inflate(R.layout.fragment_piatti_dettaglio, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.nome_piatto);
-            textView.setText(nome);
+
+            Bundle args = getArguments();
+
+            String nome = args.getString("nome");
+            String descrizione = args.getString("descrizione");
+            int img = Integer.parseInt(args.getString("img"));
+            String prezzo = "Prezzo: " + String.valueOf(args.getString("prezzo"));
+
+
+            TextView textView_nome = (TextView) rootView.findViewById(R.id.nome_piatto);
+            ImageView imgView = (ImageView) rootView.findViewById(R.id.image_piatto_dettaglio);
+            TextView textView_descrizione = (TextView) rootView.findViewById(R.id.descrizione_piatto);
+            TextView textView_prezzo = (TextView) rootView.findViewById(R.id.prezzo_piatto);
+
+
+            textView_nome.setText(nome);
+            textView_descrizione.setText(descrizione);
+            textView_prezzo.setText(prezzo);
+            Glide.with(this).load(img).into(imgView);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
