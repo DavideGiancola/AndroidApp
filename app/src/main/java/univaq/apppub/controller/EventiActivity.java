@@ -31,7 +31,7 @@ public class EventiActivity extends AppCompatActivity {
         mList.setLayoutManager(new LinearLayoutManager(EventiActivity.this));
         System.out.println("ciao");
 
-        EventiAdapter adapter = new EventiAdapter(eventi);
+        EventiAdapter adapter = new EventiAdapter(this, eventi);
         mList.setAdapter(adapter);
 
     }
@@ -42,6 +42,13 @@ public class EventiActivity extends AppCompatActivity {
 
         List<Evento> eventi = new ArrayList<>();
 
+        int[] img = new int[]{
+                R.drawable.evento1,
+                R.drawable.evento2,
+                R.drawable.evento3,
+                R.drawable.evento4,
+        };
+
         String[] arrayNomi = getResources().getStringArray(R.array.array_nomi);
         String[] arrayData = getResources().getStringArray(R.array.array_data);
         String[] arrayOraIn = getResources().getStringArray(R.array.array_ora_inizio);
@@ -49,7 +56,7 @@ public class EventiActivity extends AppCompatActivity {
         String[] arrayDescrizione = getResources().getStringArray(R.array.array_descrizione);
 
         for (int i = 0; i < arrayNomi.length; i++) {
-            Evento evento = new Evento(arrayNomi[i], arrayData[i], arrayOraIn[i], arrayOraFin[i], arrayDescrizione[i]);
+            Evento evento = new Evento(arrayNomi[i], arrayData[i], arrayOraIn[i], arrayOraFin[i], arrayDescrizione[i], img[i]);
             eventi.add(evento);
         }
 

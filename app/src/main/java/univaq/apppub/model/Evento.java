@@ -15,12 +15,16 @@ public class Evento {
     private String oraFine;
     private String descrizione;
 
-    public Evento(String nome, String data, String oraInizio, String oraFine, String descrizione) {
+
+    private int img;
+
+    public Evento(String nome, String data, String oraInizio, String oraFine, String descrizione, int img) {
         this.nome = nome;
         this.data = data;
         this.oraInizio = oraInizio;
         this.oraFine = oraFine;
         this.descrizione = descrizione;
+        this.img =img;
     }
 
     public String getNome() {
@@ -61,6 +65,14 @@ public class Evento {
 
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
+    }
+
+    public int getImg() {
+        return img;
+    }
+
+    public void setImg(int img) {
+        this.img = img;
     }
 
 
