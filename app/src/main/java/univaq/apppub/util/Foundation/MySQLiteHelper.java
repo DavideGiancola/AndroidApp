@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import univaq.apppub.model.Categoria;
+import univaq.apppub.model.Evento;
 import univaq.apppub.model.Piatto;
 
 /**
@@ -48,12 +49,23 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 "prezzo REAL," +
                 " FOREIGN KEY(id_categoria) REFERENCES categorie(id))";
 
+        String CREATE_TABLE_EVENTI =  "CREATE TABLE eventi(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "nome TEXT," +
+                "data TEXT," +
+                "oraInizio TEXT," +
+                "oraFine TEXT," +
+                "descrizione TEXT," +
+                "img INTEGER)";
+
 
         // create books table
         db.execSQL(CREATE_TABLE_CATEGORIE);
         db.execSQL(CREATE_TABLE_PIATTI);
+        db.execSQL(CREATE_TABLE_EVENTI);
 
         addCategorie(db,dataBaseGenerator.generateData());
+        addEventi(db,dataBaseGenerator.generaEventi());
     }
 
     @Override
@@ -85,6 +97,24 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 db.insert("piatti",null,valuesPiatto);
                 valuesPiatto.clear();
             }
+        }
+    }
+
+    public void addEventi(SQLiteDatabase db,List<Evento> eventi){
+
+        // 2. create ContentValues to add key "column"/value
+        ContentValues valuesEvento = new ContentValues();
+
+        for (Evento evento:eventi) {
+            valuesEvento.clear();
+            valuesEvento.put("nome",evento.getNome());
+            valuesEvento.put("data",evento.getData());
+            valuesEvento.put("oraInizio", evento.getOraInizio());
+            valuesEvento.put("oraFine",evento.getOraFine());
+            valuesEvento.put("descrizione",evento.getDescrizione());
+            valuesEvento.put("img",evento.getImg());
+            db.insert("eventi",null,valuesEvento);
+
         }
     }
 
@@ -163,4 +193,30 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return piatti;
     }
 
+
+    public List<Evento> getEventi() {
+        List<Evento> eventi = new LinkedList<Evento>();
+
+        // 1. build the query
+        String query = "SELECT * FROM eventi" ;
+        // 2. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        // 3. go over each row, build book and add it to list
+        Evento evento = null;
+        if (cursor.moveToFirst()) {
+            do {
+                evento = new Evento();
+                evento.setId(Integer.parseInt(cursor.getString(0)));
+                evento.setNome(cursor.getString(1));
+                evento.setData(cursor.getString(2));
+                evento.setOraInizio(cursor.getString(3));
+                evento.setOraFine(cursor.getString(4));
+                evento.setDescrizione(cursor.getString(5));
+                evento.setImg(Integer.parseInt(cursor.getString(6)));
+                eventi.add(evento);
+            } while (cursor.moveToNext());
+        }
+        return eventi;
+    }
 }

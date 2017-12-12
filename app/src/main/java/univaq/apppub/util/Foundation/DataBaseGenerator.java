@@ -5,6 +5,7 @@ import java.util.List;
 
 import univaq.apppub.R;
 import univaq.apppub.model.Categoria;
+import univaq.apppub.model.Evento;
 import univaq.apppub.model.Piatto;
 
 /**
@@ -50,6 +51,36 @@ public class DataBaseGenerator {
 
 
         return categorie;
+    }
+
+
+    public List<Evento> generaEventi(){
+
+        List<Evento> eventi = new ArrayList<>();
+
+
+
+        int[] img = new int[]{
+                R.drawable.ev1,
+                R.drawable.ev2,
+                R.drawable.ev3,
+                R.drawable.ev4,
+        };
+
+        int[] arrayId = {1,2, 3, 4};
+        String[] arrayNomi = {"Ludica Live Music", "the NEINTEENHEY! TEEs live", "Spaghetti Rocchenroll", "4 Anni Insieme"};
+        String[] arrayData = {"Venerdì 1 Dicembre", "Venerdì 10 Novembre", "Venerdì 6 Ottobre", "Giovedì 25 Maggio"};
+        String[] arrayOraIn = {"22:00", "22:00", "22:00", "19:00" };
+        String[] arrayOraFin = {"01:00", "01:00", "01:00", "03:00"};
+        String[] arrayDescrizione = {"Bello", "Brutto", "Non lo so", "Bei tempi"};
+
+        for (int i = 0; i < arrayNomi.length; i++) {
+            Evento evento = new Evento(arrayId[i], arrayNomi[i], arrayData[i], arrayOraIn[i], arrayOraFin[i], arrayDescrizione[i], img[i]);
+            eventi.add(evento);
+        }
+
+        return eventi;
+
     }
 
     private void addPiatti(Categoria categoria){
