@@ -9,16 +9,16 @@ import java.util.Date;
 public class Evento {
 
 
+    private int id;
     private String nome;
     private String data;
     private String oraInizio;
     private String oraFine;
     private String descrizione;
-
-
     private int img;
 
-    public Evento(String nome, String data, String oraInizio, String oraFine, String descrizione, int img) {
+    public Evento(int id, String nome, String data, String oraInizio, String oraFine, String descrizione, int img) {
+        this.id=id;
         this.nome = nome;
         this.data = data;
         this.oraInizio = oraInizio;
@@ -26,6 +26,10 @@ public class Evento {
         this.descrizione = descrizione;
         this.img =img;
     }
+
+    public Evento() {
+    }
+
 
     public String getNome() {
         return nome;
@@ -74,6 +78,15 @@ public class Evento {
     public void setImg(int img) {
         this.img = img;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
 
 }
