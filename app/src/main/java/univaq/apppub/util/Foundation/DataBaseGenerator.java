@@ -58,7 +58,7 @@ public class DataBaseGenerator {
         System.out.println(prezzo);
         for (int i=0; i< 10; i++){
             String cat = categoria.getNome() +" "+ String.valueOf(i);
-            String desc = "Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur";
+            String desc = "Carne di chianina dal nostro macellaio di fiducia e da allevamenti italiani";
             prezzo = prezzo + i;
             Piatto piatto = new Piatto(i,cat,desc,R.drawable.categoria3,prezzo);
             categoria.aggiungiPiatto(piatto);

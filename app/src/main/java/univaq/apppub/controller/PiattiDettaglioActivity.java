@@ -1,21 +1,38 @@
 package univaq.apppub.controller;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.content.pm.PackageManager;
+import android.graphics.Typeface;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,46 +40,68 @@ import univaq.apppub.R;
 import univaq.apppub.model.Piatto;
 import univaq.apppub.util.Foundation.MySQLiteHelper;
 
-public class PiattiDettaglioActivity extends AppCompatActivity {
+public class PiattiDettaglioActivity extends AppCompatActivity{
 
 
     private PiattiDettaglioActivity.SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
-    private int piatto_selezionato_id;
+    private int piatto_selezionato;
     private int categoria_piatto_id;
 
-    private List<Piatto> Piatti;
+    private static Typeface font;
+
+    private List<Piatto> piatti;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piatti_dettaglio);
-        Bundle extras = getIntent().getExtras();
-        Piatti = new ArrayList<>();
 
-        this.piatto_selezionato_id = Integer.parseInt(extras.get("id_piatto").toString());
+
+        //prendo il font
+
+        font = Typeface.createFromAsset(getAssets(),"berkshire.ttf");
+
+        Bundle extras = getIntent().getExtras();
+        piatti = new ArrayList<>();
+
+
         this.categoria_piatto_id = Integer.parseInt(extras.get("id_categoria").toString());
-        CostruisciPiatti();
+        CostruisciPiatti(Integer.parseInt(extras.get("id_piatto").toString()));
 
         mSectionsPagerAdapter = new PiattiDettaglioActivity.SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
-
+        new SaveImage().execute(mViewPager.getCurrentItem());
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setCurrentItem(piatto_selezionato_id-1);
+
+
+        mViewPager.setCurrentItem(piatto_selezionato);
 
         //recupero i dati dalla precedente activity
 
 
 
+
     }
 
-    private void CostruisciPiatti() {
+
+
+
+    private void CostruisciPiatti(int id_piatto_selezionato) {
 
         // prendi dati dal db
         MySQLiteHelper db = new MySQLiteHelper(this);
-        Piatti.addAll(db.getPiatti(categoria_piatto_id));
+        piatti.addAll(db.getPiatti(categoria_piatto_id));
 
+        int i = 0;
+        for (Piatto piatto: piatti) {
+            if (piatto.getId() == id_piatto_selezionato){
+                this.piatto_selezionato = i;
+            }
+            i = i + 1;
+        }
     }
 
     public static class PlaceholderFragment extends Fragment {
@@ -86,6 +125,7 @@ public class PiattiDettaglioActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_piatti_dettaglio, container, false);
 
+
             Bundle args = getArguments();
 
             String nome = args.getString("nome");
@@ -95,15 +135,25 @@ public class PiattiDettaglioActivity extends AppCompatActivity {
 
 
             TextView textView_nome = (TextView) rootView.findViewById(R.id.nome_piatto);
+            textView_nome.setTypeface(font);
+
             ImageView imgView = (ImageView) rootView.findViewById(R.id.image_piatto_dettaglio);
+
             TextView textView_descrizione = (TextView) rootView.findViewById(R.id.descrizione_piatto);
+            textView_descrizione.setTypeface(font);
+
             TextView textView_prezzo = (TextView) rootView.findViewById(R.id.prezzo_piatto);
+            textView_prezzo.setTypeface(font);
 
 
             textView_nome.setText(nome);
             textView_descrizione.setText(descrizione);
             textView_prezzo.setText(prezzo);
-            Glide.with(this).load(img).into(imgView);
+            //Glide.with(this).load(img).into(imgView);
+
+            System.out.println(Environment.getExternalStorageDirectory().getAbsoluteFile());
+            Glide.with(this).load(Environment.getExternalStorageDirectory().getAbsoluteFile()+"/appPub/IMG.jpeg").into(imgView);
+
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
@@ -117,14 +167,74 @@ public class PiattiDettaglioActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return PiattiDettaglioActivity.PlaceholderFragment.newInstance(position,Piatti);
+            return PiattiDettaglioActivity.PlaceholderFragment.newInstance(position, piatti);
         }
 
         @Override
         public int getCount() {
-            return Piatti.size();
+            return piatti.size();
         }
     }
 
+
+
+    private void saveImage(int currentItem) {
+
+            String stringUrl = "https://www.w3schools.com/w3css/img_fjords.jpg";
+
+            HttpURLConnection urlConnection = null;
+
+            try {
+                URL url = new URL(stringUrl);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+                File sdCardRoot = Environment.getExternalStorageDirectory().getAbsoluteFile() ;
+
+
+
+                String fileName = stringUrl.substring(stringUrl.lastIndexOf('/') + 1, stringUrl.length());
+                String fileNameWithoutExtn = fileName.substring(0, fileName.lastIndexOf('.'));
+
+
+
+                File imgFile = new File(sdCardRoot + "/appPub", fileName+".jpeg");
+                if (!sdCardRoot.exists()) {
+                    imgFile.createNewFile();
+                }
+                InputStream inputStream = urlConnection.getInputStream();
+
+                int totalSize = urlConnection.getContentLength();
+                FileOutputStream outPut = new FileOutputStream(imgFile);
+
+                int downloadedSize = 0;
+                byte[] buffer = new byte[8000];
+                int bufferLength = 0;
+                while ((bufferLength = inputStream.read(buffer)) > 0) {
+                    outPut.write(buffer, 0, bufferLength);
+                    downloadedSize += bufferLength;
+                }
+                outPut.close();
+                //if (downloadedSize == totalSize);
+                //Toast.makeText(context, "Downloaded" + imgFile.getPath(), Toast.LENGTH_LONG).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+    }
+
+    private class SaveImage extends AsyncTask<Integer, Void, String> {
+
+        @Override
+        protected String doInBackground(Integer... strings) {
+            saveImage(strings[0]);
+            return "saved";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(PiattiDettaglioActivity.this, "Scaricata  " + s, Toast.LENGTH_SHORT).show();
+        }
+    }
 
 }

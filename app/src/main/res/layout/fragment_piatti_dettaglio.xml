@@ -30,13 +30,15 @@
                 <ImageView
                     android:id="@+id/image_piatto_dettaglio"
                     android:layout_width="match_parent"
-                    android:layout_height="490dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="100dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:scaleType="centerCrop" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="490dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="100dp"
                     android:background="@drawable/gradient_card" />
 
             </FrameLayout>
@@ -53,6 +55,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="24dp"
+
+
                     android:paddingLeft="@dimen/categoria_nome_padding"
                     android:paddingRight="@dimen/categoria_nome_padding"
                     android:paddingTop="2dp"
@@ -61,34 +65,37 @@
                     android:textColor="@color/categorie_title"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/prezzo_piatto"
-                    android:layout_width="368dp"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/descrizione_piatto"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginLeft="19dp"
-                    android:layout_marginStart="19dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                    android:textColor="@color/categorie_title"
-                    tools:layout_editor_absoluteX="8dp"
-                    tools:layout_editor_absoluteY="511dp" />
-
 
                 <TextView
                     android:id="@+id/descrizione_piatto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginBottom="21dp"
-                    android:layout_marginLeft="33dp"
-                    android:layout_marginStart="33dp"
-                    android:text=" Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam,"
+                    android:layout_below="@+id/nome_piatto"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:text="nostrum exercitationem ullam corporis suscipit laboriosam,"
+                    android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Notification"
-                    android:textColor="@color/categorie_title" />
+                    android:textColor="@color/categorie_title"
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/prezzo_piatto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/descrizione_piatto"
+                    android:layout_marginTop="22dp"
+
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textColor="@color/categorie_title"
+                    android:textSize="18sp" />
+
             </RelativeLayout>
 
 
