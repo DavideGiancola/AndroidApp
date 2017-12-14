@@ -20,6 +20,7 @@ public class Evento {
     public Evento(int id, String nome, String data, String oraInizio, String oraFine, String descrizione, int img) {
         this.id=id;
         this.nome = nome;
+        //strings ("YYYY-MM-DD HH:MM:SS.SSS")
         this.data = data;
         this.oraInizio = oraInizio;
         this.oraFine = oraFine;

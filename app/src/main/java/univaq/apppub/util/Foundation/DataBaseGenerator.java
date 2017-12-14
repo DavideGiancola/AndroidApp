@@ -77,9 +77,9 @@ public class DataBaseGenerator {
         int[] arrayId = {1,2, 3, 4};
         String[] arrayNomi = {"Ludica Live Music", "the NEINTEENHEY! TEEs live", "Spaghetti Rocchenroll", "4 Anni Insieme"};
         String[] arrayData = {"Venerdì 1 Dicembre", "Venerdì 10 Novembre", "Venerdì 6 Ottobre", "Giovedì 25 Maggio"};
-        String[] arrayOraIn = {"22:00", "22:00", "22:00", "19:00" };
-        String[] arrayOraFin = {"01:00", "01:00", "01:00", "03:00"};
-        String[] arrayDescrizione = {"Bello", "Brutto", "Non lo so", "Bei tempi"};
+        String[] arrayOraIn = {"Dalle 22:00", "Dalle 22:00", "Dalle 22:00", "Dalle 19:00" };
+        String[] arrayOraFin = {"alle 01:00", "alle 01:00", "alle 01:00", "alle 03:00"};
+        String[] arrayDescrizione = {"Siamo tornati al Monthy's! Vi aspettiamo tutti per una splendida serata Rock! Non mancate! Suonera la cover band Ludica con repertorio formato dai classici del Rock e R&B per soddisfare tutti i gusti....dai più maturi ai più giovani", "Brutto", "Non lo so", "Bei tempi"};
 
         for (int i = 0; i < arrayNomi.length; i++) {
             Evento evento = new Evento(arrayId[i], arrayNomi[i], arrayData[i], arrayOraIn[i], arrayOraFin[i], arrayDescrizione[i], img[i]);
