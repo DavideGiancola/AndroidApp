@@ -135,8 +135,8 @@ public class EventiDettaglioActivity extends AppCompatActivity {
             textView_descrizione.setText(descrizione);
             Glide.with(this).load(img).into(imgView_immagine);
             textView_data.setText(data);
-            textView_ora_inizio.setText(oraInizio);
-            textView_ora_fine.setText(oraFine);
+            textView_ora_inizio.setText("Dalle "+oraInizio);
+            textView_ora_fine.setText("alle "+oraFine);
 
             return rootView;
         }
