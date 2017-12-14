@@ -39,6 +39,7 @@ import java.util.List;
 import univaq.apppub.R;
 import univaq.apppub.model.Piatto;
 import univaq.apppub.util.Foundation.MySQLiteHelper;
+import univaq.apppub.util.Network.ServerFacade;
 
 public class PiattiDettaglioActivity extends AppCompatActivity{
 
@@ -73,7 +74,6 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
 
         mSectionsPagerAdapter = new PiattiDettaglioActivity.SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
-        new SaveImage().execute(mViewPager.getCurrentItem());
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
 
@@ -85,9 +85,6 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
 
 
     }
-
-
-
 
     private void CostruisciPiatti(int id_piatto_selezionato) {
 
@@ -173,67 +170,6 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
         @Override
         public int getCount() {
             return piatti.size();
-        }
-    }
-
-
-
-    private void saveImage(int currentItem) {
-
-            String stringUrl = "https://www.w3schools.com/w3css/img_fjords.jpg";
-
-            HttpURLConnection urlConnection = null;
-
-            try {
-                URL url = new URL(stringUrl);
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-                File sdCardRoot = Environment.getExternalStorageDirectory().getAbsoluteFile() ;
-
-
-
-                String fileName = stringUrl.substring(stringUrl.lastIndexOf('/') + 1, stringUrl.length());
-                String fileNameWithoutExtn = fileName.substring(0, fileName.lastIndexOf('.'));
-
-
-
-                File imgFile = new File(sdCardRoot + "/appPub", fileName+".jpeg");
-                if (!sdCardRoot.exists()) {
-                    imgFile.createNewFile();
-                }
-                InputStream inputStream = urlConnection.getInputStream();
-
-                int totalSize = urlConnection.getContentLength();
-                FileOutputStream outPut = new FileOutputStream(imgFile);
-
-                int downloadedSize = 0;
-                byte[] buffer = new byte[8000];
-                int bufferLength = 0;
-                while ((bufferLength = inputStream.read(buffer)) > 0) {
-                    outPut.write(buffer, 0, bufferLength);
-                    downloadedSize += bufferLength;
-                }
-                outPut.close();
-                //if (downloadedSize == totalSize);
-                //Toast.makeText(context, "Downloaded" + imgFile.getPath(), Toast.LENGTH_LONG).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-    }
-
-    private class SaveImage extends AsyncTask<Integer, Void, String> {
-
-        @Override
-        protected String doInBackground(Integer... strings) {
-            saveImage(strings[0]);
-            return "saved";
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            Toast.makeText(PiattiDettaglioActivity.this, "Scaricata  " + s, Toast.LENGTH_SHORT).show();
         }
     }
 

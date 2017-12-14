@@ -15,6 +15,8 @@ import java.io.File;
 import univaq.apppub.R;
 import univaq.apppub.util.Foundation.DataBaseGenerator;
 import univaq.apppub.util.Foundation.MySQLiteHelper;
+import univaq.apppub.util.Network.GetJson;
+import univaq.apppub.util.Network.ServerFacade;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         if (shouldAskPermissions()) {
             askPermissions();
         }
@@ -72,6 +73,24 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("App", "failed to create directory");
             }
         }
+
+        ServerFacade.getInstance().getMenuVersion();
+
+        // query al db per versione menu
+        // richiesa al server della versione del menu
+        // confronto le versioni
+
+        //se diversi
+        // elimino il db
+        // richiesta al server (dammi tutto)
+        // genero il db
+                // controllo per ogni cosa il nome dell immagine .
+                    // se e presente non la scarico
+                    // se non e presente la scarico
+                // inserisco nel db gli oggetti
+
+        //ServerFacade.getInstance().saveImg("");
+
     }
 
 }

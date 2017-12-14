@@ -6,6 +6,7 @@ import java.util.List;
 import univaq.apppub.R;
 import univaq.apppub.model.Categoria;
 import univaq.apppub.model.Evento;
+import univaq.apppub.model.Menu;
 import univaq.apppub.model.Piatto;
 
 /**
@@ -53,6 +54,12 @@ public class DataBaseGenerator {
         return categorie;
     }
 
+    public Menu generateMenu(){
+        int versione = 1;
+        int id = 0;
+        Menu menu = new Menu(id ,versione);
+        return menu;
+    }
 
     public List<Evento> generaEventi(){
 

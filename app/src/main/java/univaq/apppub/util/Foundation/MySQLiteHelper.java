@@ -13,6 +13,7 @@ import java.util.List;
 
 import univaq.apppub.model.Categoria;
 import univaq.apppub.model.Evento;
+import univaq.apppub.model.Menu;
 import univaq.apppub.model.Piatto;
 
 /**
@@ -34,11 +35,19 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         DataBaseGenerator dataBaseGenerator = new DataBaseGenerator();
         List<Categoria> categorie ;
+
+        String CREATE_TABLE_MENU = "CREATE TABLE menu(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "versione_menu INTEGER)";
+
+
         String CREATE_TABLE_CATEGORIE = "CREATE TABLE categorie(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "nome TEXT," +
                 "descrizione TEXT," +
-                "img INTEGER)";
+                "img INTEGER," +
+                "id_menu INTEGER," +
+                "FOREIGN KEY(id_menu) REFERENCES menu(id))";
 
         String CREATE_TABLE_PIATTI =  "CREATE TABLE piatti(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -60,10 +69,12 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
 
         // create books table
+        db.execSQL(CREATE_TABLE_MENU);
         db.execSQL(CREATE_TABLE_CATEGORIE);
         db.execSQL(CREATE_TABLE_PIATTI);
         db.execSQL(CREATE_TABLE_EVENTI);
 
+        addMenu(db,dataBaseGenerator.generateMenu());
         addCategorie(db,dataBaseGenerator.generateData());
         addEventi(db,dataBaseGenerator.generaEventi());
     }
@@ -74,6 +85,14 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         // create fresh books table
         this.onCreate(db);
+    }
+
+    public void addMenu(SQLiteDatabase db,Menu menu){
+        ContentValues valuesMenu = new ContentValues();
+        valuesMenu.put("versione_menu",menu.getVersion());
+
+        db.insert("menu",null,valuesMenu);
+
     }
 
     public void addCategorie(SQLiteDatabase db,List<Categoria> categorie){
@@ -149,7 +168,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         List<Categoria> categorie = new LinkedList<Categoria>();
 
         // 1. build the query
-        String query = "SELECT  * FROM categorie" ;
+        String query = "SELECT * FROM categorie" ;
         // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
