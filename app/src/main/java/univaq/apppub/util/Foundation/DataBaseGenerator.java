@@ -32,22 +32,22 @@ public class DataBaseGenerator {
                 R.drawable.categoria6,
         };
 
-        Categoria a = new Categoria(1,"Primi","primi Piatti",img[1]);
+        Categoria a = new Categoria(1,"Primi","primi Piatti","");
         addPiatti(a);
         categorie.add(a);
-        a = new Categoria(2,"Hamburger","hamburge",img[2]);
+        a = new Categoria(2,"Hamburger","hamburge","");
         addPiatti(a);
         categorie.add(a);
-        a = new Categoria(3,"Secondi","secondi",img[4]);
+        a = new Categoria(3,"Secondi","secondi","");
         addPiatti(a);
         categorie.add(a);
-        a = new Categoria(4,"Contorni","contorni",img[3]);
+        a = new Categoria(4,"Contorni","contorni","");
         categorie.add(a);
-        a = new Categoria(5,"Bevande","Bevande",img[0]);
+        a = new Categoria(5,"Bevande","Bevande","");
         categorie.add(a);
-        a = new Categoria(6,"Alcolici","alcolici",img[5]);
+        a = new Categoria(6,"Alcolici","alcolici","");
         categorie.add(a);
-        a = new Categoria(7,"Prova","alcolici",img[2]);
+        a = new Categoria(7,"Prova","alcolici","");
         categorie.add(a);
 
 
@@ -60,6 +60,7 @@ public class DataBaseGenerator {
         Menu menu = new Menu(id ,versione);
         return menu;
     }
+
 
     public List<Evento> generaEventi(){
 
@@ -114,6 +115,8 @@ public class DataBaseGenerator {
 
     }
 
+
+
     private void addPiatti(Categoria categoria){
 
         double prezzo = 3.2d;
@@ -122,11 +125,12 @@ public class DataBaseGenerator {
             String cat = categoria.getNome() +" "+ String.valueOf(i);
             String desc = "Carne di chianina dal nostro macellaio di fiducia e da allevamenti italiani";
             prezzo = prezzo + i;
-            Piatto piatto = new Piatto(i,cat,desc,R.drawable.categoria3,prezzo);
+            Piatto piatto = new Piatto(i,cat,desc,"",prezzo);
             categoria.aggiungiPiatto(piatto);
         }
 
     }
+
 
 
 

@@ -127,7 +127,7 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
 
             String nome = args.getString("nome");
             String descrizione = args.getString("descrizione");
-            int img = Integer.parseInt(args.getString("img"));
+            String img = args.getString("img");
             String prezzo = "Prezzo: " + String.valueOf(args.getString("prezzo"));
 
 

@@ -74,7 +74,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        ServerFacade.getInstance().getMenuVersion();
+        ServerFacade.getInstance().setContext(this);
+
+        ServerFacade.getInstance().getMenu();
 
         // query al db per versione menu
         // richiesa al server della versione del menu
@@ -92,5 +94,7 @@ public class MainActivity extends AppCompatActivity {
         //ServerFacade.getInstance().saveImg("");
 
     }
+
+
 
 }

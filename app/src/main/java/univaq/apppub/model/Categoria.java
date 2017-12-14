@@ -12,9 +12,9 @@ public class Categoria {
     private String nome;
     private String Descrizione;
     private ArrayList<Piatto> Piatti;
-    private int img;
+    private String img;
 
-    public Categoria(int id,String nome, String descrizione, int img) {
+    public Categoria(int id,String nome, String descrizione, String img) {
         this.id = id;
         this.nome = nome;
         Descrizione = descrizione;
@@ -49,11 +49,11 @@ public class Categoria {
         Piatti = piatti;
     }
 
-    public int getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(String img) {
         this.img = img;
     }
 

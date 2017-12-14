@@ -9,12 +9,12 @@ public class Piatto {
     int id;
     String nome;
     String descrizione;
-    int img;
+    String img;
 
 
     double prezzo;
 
-    public Piatto(int id, String nome, String descrizione, int img,double prezzo) {
+    public Piatto(int id, String nome, String descrizione, String img,double prezzo) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
@@ -57,11 +57,11 @@ public class Piatto {
         this.descrizione = descrizione;
     }
 
-    public int getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(String img) {
         this.img = img;
     }
 }

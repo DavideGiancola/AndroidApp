@@ -31,6 +31,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         DataBaseGenerator dataBaseGenerator = new DataBaseGenerator();
@@ -45,7 +46,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "nome TEXT," +
                 "descrizione TEXT," +
-                "img INTEGER," +
+                "img TEXT," +
                 "id_menu INTEGER," +
                 "FOREIGN KEY(id_menu) REFERENCES menu(id))";
 
@@ -53,7 +54,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "nome TEXT," +
                 "descrizione TEXT," +
-                "img INTEGER," +
+                "img TEXT," +
                 "id_categoria INTEGER," +
                 "prezzo REAL," +
                 " FOREIGN KEY(id_categoria) REFERENCES categorie(id))";
@@ -74,8 +75,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_PIATTI);
         db.execSQL(CREATE_TABLE_EVENTI);
 
-        addMenu(db,dataBaseGenerator.generateMenu());
-        addCategorie(db,dataBaseGenerator.generateData());
+
         addEventi(db,dataBaseGenerator.generaEventi());
     }
 
@@ -87,12 +87,42 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
-    public void addMenu(SQLiteDatabase db,Menu menu){
-        ContentValues valuesMenu = new ContentValues();
-        valuesMenu.put("versione_menu",menu.getVersion());
 
+
+
+    public void addMenu(Menu menu){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues valuesMenu = new ContentValues();
+        ContentValues valuesCategorie = new ContentValues();
+        ContentValues valuesPiatti = new ContentValues();
+
+        valuesMenu.put("versione_menu",menu.getVersion());
+        valuesMenu.put("id",menu.getId());
         db.insert("menu",null,valuesMenu);
 
+        List<Categoria> categorie = menu.getCategorie();
+
+        for (Categoria categoria: categorie) {
+            valuesCategorie.put("id",categoria.getId());
+            valuesCategorie.put("nome",categoria.getNome());
+            valuesCategorie.put("descrizione",categoria.getDescrizione());
+            valuesCategorie.put("img",categoria.getImg());
+            valuesCategorie.put("id_menu",menu.getId());
+            db.insert("categorie",null,valuesCategorie);
+            valuesCategorie.clear();
+            List<Piatto> piatti = categoria.getPiatti();
+            for (Piatto piatto:piatti) {
+                valuesPiatti.put("id",piatto.getId());
+                valuesPiatti.put("nome",piatto.getNome());
+                valuesPiatti.put("descrizione",piatto.getDescrizione());
+                valuesPiatti.put("img",piatto.getImg());
+                valuesPiatti.put("id_categoria",categoria.getId());
+                valuesPiatti.put("prezzo",piatto.getPrezzo());
+                db.insert("piatti",null,valuesPiatti);
+                valuesPiatti.clear();
+            }
+        }
     }
 
     public void addCategorie(SQLiteDatabase db,List<Categoria> categorie){
@@ -180,7 +210,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 categoria.setId(Integer.parseInt(cursor.getString(0)));
                 categoria.setNome(cursor.getString(1));
                 categoria.setDescrizione(cursor.getString(2));
-                categoria.setImg(Integer.parseInt(cursor.getString(3)));
+                categoria.setImg(cursor.getString(3));
                 // Add book to books
                 categorie.add(categoria);
             } while (cursor.moveToNext());
@@ -202,7 +232,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 piatto.setId(cursor.getInt(0));
                 piatto.setNome(cursor.getString(1));
                 piatto.setDescrizione(cursor.getString(2));
-                piatto.setImg(cursor.getInt(3));
+                piatto.setImg(cursor.getString(3));
                 piatto.setPrezzo(cursor.getDouble(5));
 
                 piatti.add(piatto);
