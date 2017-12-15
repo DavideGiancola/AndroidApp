@@ -49,6 +49,7 @@ public class EventiDettaglioActivity extends AppCompatActivity {
         mViewPager.setCurrentItem(posizione_evento_selezionato);
 
 
+
     }
 
 
