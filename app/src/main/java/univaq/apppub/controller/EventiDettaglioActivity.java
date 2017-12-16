@@ -18,10 +18,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import univaq.apppub.R;
 import univaq.apppub.model.Evento;
+import univaq.apppub.util.DateParser;
 import univaq.apppub.util.Foundation.MySQLiteHelper;
 
 public class EventiDettaglioActivity extends AppCompatActivity {
@@ -124,20 +126,32 @@ public class EventiDettaglioActivity extends AppCompatActivity {
             String oraInizio = args.getString("oraInizio");
             String oraFine = args.getString("oraFine");
 
+            DateParser dateParser = new DateParser();
+            Date dataParsificata = dateParser.parsificaData(data);
+            //System.out.println(dateParser.getNomeGiorno()+" "+dateParser.getGiornoDelMese()+" "+dateParser.getNomeMese()+" "+dateParser.getOra()+":"+dateParser.getMinuto());
+
+
             TextView textView_nome = (TextView) rootView.findViewById(R.id.nome_evento);
             TextView textView_descrizione = (TextView) rootView.findViewById(R.id.descrizione_evento);
             ImageView imgView_immagine = (ImageView) rootView.findViewById(R.id.immagine_dettaglio_evento);
-            TextView textView_data= (TextView) rootView.findViewById(R.id.data_evento);
+
+            TextView textView_giorno = (TextView) rootView.findViewById(R.id.giorno_evento);
+            TextView textView_mese = (TextView) rootView.findViewById(R.id.mese_evento);
             TextView textView_ora_inizio = (TextView) rootView.findViewById(R.id.ora_inizio_evento);
-            TextView textView_ora_fine= (TextView) rootView.findViewById(R.id.ora_fine_evento);
+            TextView textView_ora_fine = (TextView) rootView.findViewById(R.id.ora_fine_evento);
 
 
             textView_nome.setText(nome);
             textView_descrizione.setText(descrizione);
             Glide.with(this).load(img).into(imgView_immagine);
-            textView_data.setText(data);
-            textView_ora_inizio.setText("Dalle "+oraInizio);
-            textView_ora_fine.setText("alle "+oraFine);
+            textView_giorno.setText(dateParser.getGiornoDelMese());
+            textView_mese.setText(dateParser.getNomeMese());
+
+            dateParser.parsificaData(oraInizio);
+            textView_ora_inizio.setText("Dalle "+dateParser.getOra()+":"+dateParser.getMinuto());
+
+            dateParser.parsificaData(oraFine);
+            textView_ora_fine.setText("alle "+dateParser.getOra()+":"+dateParser.getMinuto());
 
             return rootView;
         }

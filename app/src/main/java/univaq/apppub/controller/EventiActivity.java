@@ -8,20 +8,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import univaq.apppub.R;
 import univaq.apppub.model.Evento;
-import univaq.apppub.util.DateParser;
 import univaq.apppub.util.EventiAdapter;
 import univaq.apppub.util.Foundation.MySQLiteHelper;
 
@@ -60,7 +51,7 @@ public class EventiActivity extends AppCompatActivity implements EventiAdapter.I
 
         eventi.addAll(db.getEventi());
 
-        System.out.println(eventi.get(0).getNome());
+        //System.out.println(eventi.get(0).getNome());
         adapter.notifyDataSetChanged();
 
 

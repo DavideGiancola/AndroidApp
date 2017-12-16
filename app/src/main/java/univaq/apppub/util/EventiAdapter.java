@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.Date;
 import java.util.List;
 
 import univaq.apppub.R;
@@ -43,10 +44,14 @@ public class EventiAdapter extends RecyclerView.Adapter<EventiAdapter.ViewHolder
     public void onBindViewHolder(EventiAdapter.ViewHolder holder, int position) {
         final Evento evento = mEventi.get(position);
         holder.nome.setText(mEventi.get(position).getNome());
-        holder.data.setText(mEventi.get(position).getData());
-        holder.oraInizio.setText(mEventi.get(position).getOraInizio());
-        //holder.oraFine.setText(mEventi.get(position).getOraFine());
-        //holder.descrizione.setText(mEventi.get(position).getDescrizione());
+
+
+        DateParser dateParser = new DateParser();
+        Date data = dateParser.parsificaData(mEventi.get(position).getData());
+        holder.data.setText(dateParser.getNomeGiorno()+" "+dateParser.getGiornoDelMese()+" "+dateParser.getNomeMese());
+        Date oraInizione = dateParser.parsificaData(mEventi.get(position).getOraInizio());
+
+        holder.oraInizio.setText("dalle "+dateParser.getOra()+":"+dateParser.getMinuto());
         Glide.with(mContext).load(mEventi.get(position).getImg()).into(holder.img);
 
         holder.row.setOnClickListener(new View.OnClickListener() {

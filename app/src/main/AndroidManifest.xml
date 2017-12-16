@@ -26,11 +26,13 @@
             android:name=".controller.EventiDettaglioActivity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".controller.PiattiDettaglioActivity"
-            android:theme="@style/Theme.Design.NoActionBar"/>
+        <activity
+            android:name=".controller.PiattiDettaglioActivity"
+            android:theme="@style/Theme.Design.NoActionBar" />
 
-
-
+        <activity android:name=".controller.InizialeActivity"
+            android:theme="@style/Theme.Design.NoActionBar"
+        />
     </application>
 
 </manifest>

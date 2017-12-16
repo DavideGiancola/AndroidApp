@@ -75,11 +75,12 @@ public class DataBaseGenerator {
                 R.drawable.d,
         };
 
+
         int[] arrayId = {1,2, 3, 4};
         String[] arrayNomi = {"Ludica Live Music", "the NEINTEENHEY! TEEs live", "Spaghetti Rocchenroll", "4 Anni Insieme"};
-        String[] arrayData = {"Venerdì 1 Dicembre", "Venerdì 10 Novembre", "Venerdì 6 Ottobre", "Giovedì 25 Maggio"};
-        String[] arrayOraIn = {"22:00", "22:00", "22:00", "19:00" };
-        String[] arrayOraFin = {"01:00", "01:00", "01:00", "03:00"};
+        String[] arrayData = {"ven dic 1 00:00:00 2017", "ven nov 10 00:00:00 2017", "ven ott 6 00:00:00 2017", "gio mag 25 00:00:00 2017"};
+        String[] arrayOraIn = {"ven dic 1 22:00:00 2017", "ven nov 10 22:00:00 2017", "ven ott 6 22:00:00 2017", "gio mag 25 19:00:00 2017" };
+        String[] arrayOraFin = {"sab dic 2 01:00:00 2017", "sab nov 11 01:00:00 2017", "sab ott 7 01:00:00 2017", "ven mag 26 03:00:00 2017"};
         String[] arrayDescrizione = {"Siamo tornati al Monthy's! Vi aspettiamo tutti per una splendida serata Rock! Non mancate! Suonera la cover band Ludica con repertorio formato dai classici del Rock e R&B per soddisfare tutti i gusti....dai più maturi ai più giovani",
                                     "Venerdì 10 novembre, a Stoccolma, di sera, deve fare parecchio freddo, e lì i ragazzi di Ventura, una delle peggiori nazionali della storia, cercheranno di evitarvi un dolore atroce, l’Italia fuori dai mondiali.\n" +
                                             "\n" +

@@ -15,7 +15,8 @@ public class DateParser {
 
     private String nomeGiorno;
     private String nomeMese;
-    private int giornoDelMese;
+    private String nomeMeseEsteso;
+    private String giornoDelMese;
     private String ora;
     private String minuto;
 
@@ -32,7 +33,7 @@ public class DateParser {
             e.printStackTrace();
         }
 
-        String dataFormattata = df.format(data.getTime());
+        //String dataFormattata = df.format(data.getTime());
         //System.out.println(dataFormattata);
 
         Calendar cal = Calendar.getInstance();
@@ -48,9 +49,12 @@ public class DateParser {
         SimpleDateFormat dfNomeMese = new SimpleDateFormat("MMM", Locale.ITALIAN);
         cal.set(Calendar.MONTH, numeroMese);
         this.nomeMese = dfNomeMese.format(cal.getTime());
+        SimpleDateFormat dfNomeMeseEsteso = new SimpleDateFormat("MMMM", Locale.ITALIAN);
+        cal.set(Calendar.MONTH, numeroMese);
+        this.nomeMeseEsteso = dfNomeMeseEsteso.format(cal.getTime());
 
 
-        this.giornoDelMese = cal.get(Calendar.DAY_OF_MONTH);
+        this.giornoDelMese = "" + cal.get(Calendar.DAY_OF_MONTH);
 
         SimpleDateFormat dfOra = new SimpleDateFormat("HH", Locale.ITALIAN);
         this.ora = dfOra.format(cal.getTime());
@@ -70,7 +74,7 @@ public class DateParser {
         return nomeMese;
     }
 
-    public int getGiornoDelMese() {
+    public String getGiornoDelMese() {
         return giornoDelMese;
     }
 
@@ -82,4 +86,7 @@ public class DateParser {
         return minuto;
     }
 
+    public String getNomeMeseEsteso() {
+        return nomeMeseEsteso;
+    }
 }

@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mButtonEventi;
     private Button mButtonMenu;
+    private Button mButtonIniziale;
 
 
     protected boolean shouldAskPermissions() {
@@ -63,6 +64,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), EventiActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mButtonIniziale=(Button) findViewById(R.id.inizialeButton);
+        mButtonIniziale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), InizialeActivity.class);
                 startActivity(intent);
             }
         });

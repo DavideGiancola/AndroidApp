@@ -73,18 +73,6 @@
             app:layout_constraintTop_toBottomOf="@+id/nome_evento" />
 
         <TextView
-            android:id="@+id/data_evento"
-            android:layout_width="10dp"
-            android:layout_height="11dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="TextView"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/testo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
             android:id="@+id/ora_fine_evento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -121,7 +109,7 @@
 
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/giorno_evento"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginEnd="2dp"
@@ -138,10 +126,10 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/mese_evento"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_below="@+id/textView2"
+                    android:layout_below="@+id/giorno_evento"
                     android:layout_marginBottom="1dp"
                     android:layout_marginEnd="2dp"
                     android:layout_marginStart="2dp"
@@ -151,10 +139,11 @@
                     android:text="GEN"
                     android:textColor="@color/categorie_title"
                     android:textStyle="bold|italic"
+                    android:textAllCaps="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                    app:layout_constraintTop_toBottomOf="@+id/giorno_evento" />
 
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>
