@@ -14,7 +14,7 @@
         card_view:cardCornerRadius="@dimen/card_album_radius">
 
             <ImageView
-                android:id="@+id/thumbnail"
+                android:id="@+id/thumbnail_categoria"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/album_cover_height"
                 android:background="?attr/selectableItemBackgroundBorderless"

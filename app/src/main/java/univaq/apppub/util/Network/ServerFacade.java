@@ -75,7 +75,7 @@ public class ServerFacade  {
                 File sdCardRoot = Environment.getExternalStorageDirectory().getAbsoluteFile() ;
                 fileName = stringUrl.substring(stringUrl.lastIndexOf('/') + 1, stringUrl.length());
                 String fileNameWithoutExtn = fileName.substring(0, fileName.lastIndexOf('.'));
-                File imgFile = new File(sdCardRoot + "/appPub", fileName+".jpeg");
+                File imgFile = new File(sdCardRoot + "/appPub", fileName);
                 if (!sdCardRoot.exists()) {
                     imgFile.createNewFile();
                 }
@@ -95,7 +95,7 @@ public class ServerFacade  {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return fileName+".jpeg";
+            return fileName;
         }
         @Override
         protected String doInBackground(String... strings) {
@@ -175,17 +175,26 @@ public class ServerFacade  {
                         String nome = c.getString("nome");
                         String descrizione = c.getString("descrizione");
                         String immagine = c.getString("immagine");
-                        Categoria categoria = new Categoria(Integer.parseInt(id),nome,descrizione,immagine);
-                        new SaveImage().execute("https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg"); // link immagine categoria
+                        String fileNameIMG = immagine.substring(immagine.lastIndexOf('/') + 1, immagine.length());
+                        fileNameIMG = Environment.getExternalStorageDirectory().getAbsoluteFile() + "/appPub/" + fileNameIMG;
+                        Categoria categoria = new Categoria(Integer.parseInt(id),nome,descrizione,fileNameIMG);
+
+
+                        new SaveImage().execute(immagine); // link immagine categoria
 
                         JSONArray p = c.getJSONArray("piatti");
+                        JSONObject a = null;
                         for (int j = 0; j < p.length(); j++) {
-                            String id_piatto = c.getString("id");
-                            String nome_piatto = c.getString("nome");
-                            String descrizione_piatto = c.getString("descrizione");
-                            String immagine_piatto = c.getString("immagine");
-                            Piatto piatto = new Piatto(Integer.parseInt(id_piatto),nome_piatto,descrizione_piatto,immagine_piatto,2);
-                            new SaveImage().execute("https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg"); // link dell'immagine da aggiungere
+                            a = p.getJSONObject(j);
+                            String id_piatto = a.getString("id");
+                            String nome_piatto = a.getString("nome");
+                            String descrizione_piatto = a.getString("descrizione");
+                            String immagine_piatto = a.getString("immagine");
+                            String fileNameIMGPiatto = immagine_piatto.substring(immagine_piatto.lastIndexOf('/') + 1, immagine_piatto.length());
+                            fileNameIMGPiatto = Environment.getExternalStorageDirectory().getAbsoluteFile() + "/appPub/" + fileNameIMGPiatto;
+
+                            Piatto piatto = new Piatto(Integer.parseInt(id_piatto),nome_piatto,descrizione_piatto,fileNameIMGPiatto,2);
+                            new SaveImage().execute(immagine_piatto); // link dell'immagine da aggiungere
                             categoria.aggiungiPiatto(piatto);
                         }
                         menu.aggiungiCategoria(categoria);

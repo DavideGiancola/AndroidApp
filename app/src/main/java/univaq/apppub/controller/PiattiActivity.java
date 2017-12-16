@@ -1,6 +1,7 @@
 package univaq.apppub.controller;
 
 import android.content.Intent;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -23,14 +24,17 @@ public class PiattiActivity extends AppCompatActivity implements PiattiAdapter.I
     private RecyclerView mRecyclerView;
     private PiattiAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
     private List<Piatto> Piatti;
     private int categoria_id;
+    private String categoria_nome;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
+
         setContentView(R.layout.activity_piatti);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerPiatti);
         mRecyclerView.setHasFixedSize(true);
@@ -57,6 +61,12 @@ public class PiattiActivity extends AppCompatActivity implements PiattiAdapter.I
         // prendi dati dal db
         MySQLiteHelper db = new MySQLiteHelper(this);
         categoria_id = Integer.parseInt(extras.get("id").toString());
+        categoria_nome = extras.get("name").toString();
+        System.out.println(categoria_nome);
+
+        collapsingToolbarLayout =(CollapsingToolbarLayout) findViewById(R.id.CollapsingToolbar);
+        collapsingToolbarLayout.setTitle(categoria_nome);
+
         Piatti.addAll(db.getPiatti(categoria_id));
         mAdapter.notifyDataSetChanged();
     }

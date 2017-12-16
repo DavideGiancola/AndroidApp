@@ -64,6 +64,7 @@ public class CategorieActivity extends Activity implements CategorieAdapter.Item
     public void onItemClick(View view, Categoria categoria) {
         Intent intent = new Intent(getApplicationContext(), PiattiActivity.class);
         intent.putExtra("id",String.valueOf(categoria.getId()));
+        intent.putExtra("name",categoria.getNome());
         startActivity(intent);
     }
 }

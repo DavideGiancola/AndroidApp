@@ -13,9 +13,6 @@ import android.widget.Button;
 import java.io.File;
 
 import univaq.apppub.R;
-import univaq.apppub.util.Foundation.DataBaseGenerator;
-import univaq.apppub.util.Foundation.MySQLiteHelper;
-import univaq.apppub.util.Network.GetJson;
 import univaq.apppub.util.Network.ServerFacade;
 
 public class MainActivity extends AppCompatActivity {
@@ -87,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ServerFacade.getInstance().setContext(this);
+
         if(First_Opened == false) {
             ServerFacade.getInstance().getMenuVersion();
             System.out.println("Prima Apertura");

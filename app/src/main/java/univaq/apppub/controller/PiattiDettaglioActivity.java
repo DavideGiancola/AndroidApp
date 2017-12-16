@@ -145,8 +145,8 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
             textView_prezzo.setText(prezzo);
             //Glide.with(this).load(img).into(imgView);
 
-            System.out.println(Environment.getExternalStorageDirectory().getAbsoluteFile());
-            Glide.with(this).load(Environment.getExternalStorageDirectory().getAbsoluteFile()+"/appPub/IMG.jpeg").into(imgView);
+
+            Glide.with(this).load(img).into(imgView);
 
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;

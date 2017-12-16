@@ -37,7 +37,7 @@ public class CategorieAdapter extends RecyclerView.Adapter<CategorieAdapter.View
         public ViewHolder(View v) {
             super(v);
             mNome = (TextView) v.findViewById(R.id.nome);
-            mThumbnail = (ImageView) v.findViewById(R.id.thumbnail);
+            mThumbnail = (ImageView) v.findViewById(R.id.thumbnail_categoria);
             cardView = (CardView) v.findViewById(R.id.card_view);
         }
 
@@ -59,6 +59,7 @@ public class CategorieAdapter extends RecyclerView.Adapter<CategorieAdapter.View
     public void onBindViewHolder(final CategorieAdapter.ViewHolder holder, final int position) {
         final Categoria categoria = CategoriaList.get(position);
         holder.mNome.setText(categoria.getNome());
+        System.out.println(categoria.getImg());
         Glide.with(mContext).load(categoria.getImg()).into(holder.mThumbnail);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
