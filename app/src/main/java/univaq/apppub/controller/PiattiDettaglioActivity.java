@@ -81,9 +81,6 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
 
         //recupero i dati dalla precedente activity
 
-
-
-
     }
 
     private void CostruisciPiatti(int id_piatto_selezionato) {

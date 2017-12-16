@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private Button mButtonMenu;
     private Button mButtonIniziale;
 
+    private static boolean First_Opened = false;
+
 
     protected boolean shouldAskPermissions() {
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
@@ -85,23 +87,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ServerFacade.getInstance().setContext(this);
+        if(First_Opened == false) {
+            ServerFacade.getInstance().getMenuVersion();
+            System.out.println("Prima Apertura");
+        }
 
-        ServerFacade.getInstance().getMenu();
-
-        // query al db per versione menu
-        // richiesa al server della versione del menu
-        // confronto le versioni
-
-        //se diversi
-        // elimino il db
-        // richiesta al server (dammi tutto)
-        // genero il db
-                // controllo per ogni cosa il nome dell immagine .
-                    // se e presente non la scarico
-                    // se non e presente la scarico
-                // inserisco nel db gli oggetti
-
-        //ServerFacade.getInstance().saveImg("");
+        First_Opened = true;
 
     }
 

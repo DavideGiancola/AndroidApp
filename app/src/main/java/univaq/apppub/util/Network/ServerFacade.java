@@ -55,7 +55,7 @@ public class ServerFacade  {
     }
 
     public void getMenuVersion(){
-        new GetJson_MenuVersion().execute("https://appub.herokuapp.com/api/getMenu");
+        new GetJson_MenuVersion().execute("https://appub.herokuapp.com/api/getMenuVersion");
     }
 
     public void getMenu(){
@@ -116,16 +116,36 @@ public class ServerFacade  {
             HttpHandler sh = new HttpHandler();
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(arg0[0]);
+            String MenuVersion = null;
             if (jsonStr != null) {
-                stringaJson = jsonStr;
+                JSONObject jsonObj = null;
+                try {
+                    jsonObj = new JSONObject(jsonStr);
+                    MenuVersion = jsonObj.getString("menu_version");
+                    System.out.println(MenuVersion);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                MySQLiteHelper helper = new MySQLiteHelper(context);
+                SQLiteDatabase db = helper.getWritableDatabase();
+                int current_version = helper.getMenuVersion();
+                if(Integer.parseInt(MenuVersion) > current_version){
+                    System.out.println("versione non aggiornata -- Aggiornamento");
+                    helper.onUpgrade(db,current_version,Integer.parseInt(MenuVersion));
+                    getMenu();
+                }else{
+                    System.out.println("versione aggiornata!");
+                }
+
+
             }
-            new SaveImage().execute("https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg");
             return stringaJson;
         }
 
         @Override
         protected void onPostExecute(String result) {
-            System.out.println(result);
         }
     }
 
@@ -156,6 +176,7 @@ public class ServerFacade  {
                         String descrizione = c.getString("descrizione");
                         String immagine = c.getString("immagine");
                         Categoria categoria = new Categoria(Integer.parseInt(id),nome,descrizione,immagine);
+                        new SaveImage().execute("https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg"); // link immagine categoria
 
                         JSONArray p = c.getJSONArray("piatti");
                         for (int j = 0; j < p.length(); j++) {
@@ -164,14 +185,13 @@ public class ServerFacade  {
                             String descrizione_piatto = c.getString("descrizione");
                             String immagine_piatto = c.getString("immagine");
                             Piatto piatto = new Piatto(Integer.parseInt(id_piatto),nome_piatto,descrizione_piatto,immagine_piatto,2);
+                            new SaveImage().execute("https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg"); // link dell'immagine da aggiungere
                             categoria.aggiungiPiatto(piatto);
                         }
                         menu.aggiungiCategoria(categoria);
                     }
 
                     MySQLiteHelper helper = new MySQLiteHelper(context);
-
-                    System.out.println("qaaaa");
                     helper.addMenu(menu);
 
 
@@ -181,7 +201,6 @@ public class ServerFacade  {
                 }
 
             }
-            new SaveImage().execute("https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg");
             return stringaJson;
         }
     }

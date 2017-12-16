@@ -81,13 +81,28 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        db.execSQL("DROP TABLE IF EXISTS piatti");
         db.execSQL("DROP TABLE IF EXISTS categorie");
+        db.execSQL("DROP TABLE IF EXISTS menu");
+        db.execSQL("DROP TABLE IF EXISTS eventi");
 
         // create fresh books table
         this.onCreate(db);
     }
 
 
+    public int getMenuVersion(){
+        String query = "SELECT versione_menu FROM menu";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        int versione_menu = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                versione_menu = Integer.parseInt(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        return versione_menu;
+    }
 
 
     public void addMenu(Menu menu){
