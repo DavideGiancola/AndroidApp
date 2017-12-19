@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(First_Opened == false) {
             ServerFacade.getInstance().getMenuVersion();
+            System.out.println("qui");
+            ServerFacade.getInstance().getSchedarioVersion();
             System.out.println("Prima Apertura");
         }
 

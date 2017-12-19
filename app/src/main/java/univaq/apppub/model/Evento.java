@@ -15,9 +15,9 @@ public class Evento {
     private String oraInizio;
     private String oraFine;
     private String descrizione;
-    private int img;
+    private String img;
 
-    public Evento(int id, String nome, String data, String oraInizio, String oraFine, String descrizione, int img) {
+    public Evento(int id, String nome, String data, String oraInizio, String oraFine, String descrizione, String img) {
         this.id=id;
         this.nome = nome;
         //strings ("YYYY-MM-DD HH:MM:SS.SSS")
@@ -72,11 +72,11 @@ public class Evento {
         this.descrizione = descrizione;
     }
 
-    public int getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(String img) {
         this.img = img;
     }
 

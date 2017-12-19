@@ -21,8 +21,10 @@ import java.net.URL;
 
 import univaq.apppub.controller.MainActivity;
 import univaq.apppub.model.Categoria;
+import univaq.apppub.model.Evento;
 import univaq.apppub.model.Menu;
 import univaq.apppub.model.Piatto;
+import univaq.apppub.model.Schedario;
 import univaq.apppub.util.Foundation.MySQLiteHelper;
 
 
@@ -61,6 +63,13 @@ public class ServerFacade  {
     public void getMenu(){
         new GetMenu().execute("https://appub.herokuapp.com/api/getMenu");
     }
+
+    public void getSchedarioVersion() {
+        new GetJson_SchedarioVersion().execute("https://appub.herokuapp.com/api/getSchedarioVersion"); // !!!!!!!!
+    }
+
+    private void getSchedario() { new GetSchedario().execute("https://appub.herokuapp.com/api/getEventi"); } //{"schedario":..... !!!!!!!!!!!!!!!!!!!!!!!!
+
 
     public class SaveImage extends AsyncTask<String, Void, String> {
         private String saveImage(String Url_image) {
@@ -215,6 +224,101 @@ public class ServerFacade  {
     }
 
 
+    private class GetJson_SchedarioVersion extends AsyncTask<String, Void, String>{
+        @Override
+        protected String doInBackground(String... arg0) {
+            String stringaJson = null;
+            HttpHandler sh = new HttpHandler();
+
+            String jsonStr = sh.makeServiceCall(arg0[0]);
+
+
+            String SchedarioVersion = null;
+            if (jsonStr != null) {
+
+
+                JSONObject jsonObj = null;
+                try {
+                    jsonObj = new JSONObject(jsonStr);
+                    SchedarioVersion = jsonObj.getString("schedario_version");  //{"schedario_version":2}!!!!!!!!!!!!!!!!!!!!!!
+                    System.out.println(SchedarioVersion);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+                MySQLiteHelper helper = new MySQLiteHelper(context);
+                SQLiteDatabase db = helper.getWritableDatabase();
+                int current_version = helper.getSchedarioVersion();
+                if(Integer.parseInt(SchedarioVersion) > current_version){
+                    System.out.println("versione non aggiornata -- Aggiornamento");
+                    helper.onUpgrade(db,current_version,Integer.parseInt(SchedarioVersion));
+                    getSchedario();
+                }else{
+                    System.out.println("versione aggiornata!");
+                }
+
+
+            }
+            return stringaJson;
+        }
+    }
+
+    private class GetSchedario extends AsyncTask<String, Void, String>{
+        @Override
+        protected String doInBackground(String... strings) {
+            String stringaJson = null;
+            HttpHandler sh = new HttpHandler();
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall(strings[0]);
+            if (jsonStr != null) {
+                JSONObject jsonObj = null;
+                try {
+                    jsonObj = new JSONObject(jsonStr);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    JSONArray schedario_Json = jsonObj.getJSONArray("evento"/*"schedario"*/); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    Schedario schedario = new Schedario(0,1);                //{"schedario":..... !!!!!!!!!!!!!!!!!!!!!!!!
+
+                    for (int i = 0; i < schedario_Json.length(); i++) {
+                        JSONObject c = schedario_Json.getJSONObject(i);
+
+                        String id = c.getString("id");
+                        String nome = c.getString("titolo");
+                        String immagine = c.getString("immagine");  // !!!!!!!!!!!!!!!    https:\/\/appub.herokuapp.com\/storage\/mozzarella.jpg  !!!!!!!!!!!
+                        String fileNameIMG = immagine.substring(immagine.lastIndexOf('/') + 1, immagine.length());
+                        fileNameIMG = Environment.getExternalStorageDirectory().getAbsoluteFile() + "/appPub/" + fileNameIMG;
+                        String descrizione = c.getString("descrizione");
+                        String data = c.getString("data");
+                        String ora_inizio = c.getString("ora_inizio");
+                        String ora_fine = c.getString("ora_fine");
+
+
+                        Evento evento = new Evento(Integer.parseInt(id), nome, data, ora_inizio, ora_fine, descrizione, fileNameIMG);
+
+
+                        new SaveImage().execute(immagine); // link immagine evento
+
+                        schedario.aggiungiEvento(evento);
+                    }
+
+                    MySQLiteHelper helper = new MySQLiteHelper(context);
+                    helper.addSchedario(schedario);
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            return stringaJson;
+        }
+    }
 }
 
 

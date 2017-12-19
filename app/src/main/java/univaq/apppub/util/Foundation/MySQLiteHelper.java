@@ -15,6 +15,7 @@ import univaq.apppub.model.Categoria;
 import univaq.apppub.model.Evento;
 import univaq.apppub.model.Menu;
 import univaq.apppub.model.Piatto;
+import univaq.apppub.model.Schedario;
 
 /**
  * Created by Gioele on 10/12/2017.
@@ -36,6 +37,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         DataBaseGenerator dataBaseGenerator = new DataBaseGenerator();
         List<Categoria> categorie ;
+
+        String CREATE_TABLE_SCHEDARIO = "CREATE TABLE schedario(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "versione_schedario INTEGER)";
 
         String CREATE_TABLE_MENU = "CREATE TABLE menu(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -66,17 +71,18 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 "oraInizio TEXT," +
                 "oraFine TEXT," +
                 "descrizione TEXT," +
-                "img INTEGER)";
+                "img TEXT)";
 
 
         // create books table
+        db.execSQL(CREATE_TABLE_SCHEDARIO);
         db.execSQL(CREATE_TABLE_MENU);
         db.execSQL(CREATE_TABLE_CATEGORIE);
         db.execSQL(CREATE_TABLE_PIATTI);
         db.execSQL(CREATE_TABLE_EVENTI);
 
 
-        addEventi(db,dataBaseGenerator.generaEventi());
+       // addEventi(db,dataBaseGenerator.generaEventi());
     }
 
     @Override
@@ -85,6 +91,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS categorie");
         db.execSQL("DROP TABLE IF EXISTS menu");
         db.execSQL("DROP TABLE IF EXISTS eventi");
+        db.execSQL("DROP TABLE IF EXISTS schedario");
 
         // create fresh books table
         this.onCreate(db);
@@ -277,10 +284,52 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 evento.setOraInizio(cursor.getString(3));
                 evento.setOraFine(cursor.getString(4));
                 evento.setDescrizione(cursor.getString(5));
-                evento.setImg(Integer.parseInt(cursor.getString(6)));
+                evento.setImg(cursor.getString(6));
                 eventi.add(evento);
             } while (cursor.moveToNext());
         }
         return eventi;
+    }
+
+    public int getSchedarioVersion() {
+        String query = "SELECT versione_schedario FROM schedario";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        int versione_schedario = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                versione_schedario = Integer.parseInt(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        return versione_schedario;
+    }
+
+    public void addSchedario(Schedario schedario) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues valuesSchedario= new ContentValues();
+        ContentValues valuesEventi = new ContentValues();
+
+        valuesSchedario.put("versione_schedario",schedario.getVersion());
+        valuesSchedario.put("id",schedario.getId());
+        db.insert("schedario",null,valuesSchedario);
+
+        List<Evento> eventi = schedario.getEventi();
+
+
+        for (Evento evento: eventi) {
+            valuesEventi.put("id",evento.getId());
+            valuesEventi.put("nome",evento.getNome());
+            valuesEventi.put("data",evento.getData());
+            valuesEventi.put("oraInizio",evento.getOraInizio());
+            valuesEventi.put("oraFine",evento.getOraFine());
+            valuesEventi.put("descrizione",evento.getDescrizione());
+            valuesEventi.put("img",evento.getImg());
+            db.insert("eventi",null,valuesEventi);
+            valuesEventi.clear();
+        }
     }
 }

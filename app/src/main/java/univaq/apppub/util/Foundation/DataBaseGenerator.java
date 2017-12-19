@@ -62,6 +62,7 @@ public class DataBaseGenerator {
     }
 
 
+    /*
     public List<Evento> generaEventi(){
 
         List<Evento> eventi = new ArrayList<>();
@@ -115,6 +116,7 @@ public class DataBaseGenerator {
         return eventi;
 
     }
+    */
 
 
 

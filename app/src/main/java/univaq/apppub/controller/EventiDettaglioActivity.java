@@ -121,7 +121,7 @@ public class EventiDettaglioActivity extends AppCompatActivity {
 
             String nome = args.getString("nome");
             String descrizione = args.getString("descrizione");
-            int img = Integer.parseInt(args.getString("img"));
+            String img = args.getString("img");
             String data = args.getString("data");
             String oraInizio = args.getString("oraInizio");
             String oraFine = args.getString("oraFine");
