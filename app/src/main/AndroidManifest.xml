@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="it.html.googleservices.push.permission.C2D_MESSAGE" />
 
     <application
         android:allowBackup="true"
@@ -32,6 +34,25 @@
         <activity
             android:name=".controller.InizialeActivity"
             android:theme="@style/Theme.Design.NoActionBar" />
+
+
+        <service
+            android:name=".util.Network.FireBaseService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/montislogo" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
+
     </application>
+
+
 
 </manifest>
