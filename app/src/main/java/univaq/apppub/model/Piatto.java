@@ -10,8 +10,6 @@ public class Piatto {
     String nome;
     String descrizione;
     String img;
-
-
     double prezzo;
 
     public Piatto(int id, String nome, String descrizione, String img,double prezzo) {
