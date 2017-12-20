@@ -329,68 +329,7 @@ public class ServerFacade  {
             return stringaJson;
         }
     }
-
-
-    public void generateNOtification(){
-        new generatePictureStyleNotification(context,"Title", "Message", "http://api.androidhive.info/images/sample.jpg").execute();
-    }
-
-
-    public class generatePictureStyleNotification extends AsyncTask<String, Void, Bitmap> {
-
-        private Context mContext;
-        private String title, message, imageUrl;
-
-        public generatePictureStyleNotification(Context context, String title, String message, String imageUrl) {
-            super();
-            this.mContext = context;
-            this.title = title;
-            this.message = message;
-            this.imageUrl = imageUrl;
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... params) {
-
-            InputStream in;
-            try {
-                URL url = new URL(this.imageUrl);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                in = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(in);
-                return myBitmap;
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            super.onPostExecute(result);
-
-            Intent intent = new Intent(mContext, MainActivity.class);
-            intent.putExtra("key", "value");
-            PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 100, intent, PendingIntent.FLAG_ONE_SHOT);
-
-            NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-            Notification notif = new Notification.Builder(mContext)
-                    .setContentIntent(pendingIntent)
-                    .setContentTitle(title)
-                    .setContentText(message)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setLargeIcon(result)
-                    .setStyle(new Notification.BigPictureStyle().bigPicture(result))
-                    .build();
-            notif.flags |= Notification.FLAG_AUTO_CANCEL;
-            notificationManager.notify(1, notif);
-        }
-    }
+    
 }
 
 
