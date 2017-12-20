@@ -199,10 +199,11 @@ public class ServerFacade  {
                             String nome_piatto = a.getString("nome");
                             String descrizione_piatto = a.getString("descrizione");
                             String immagine_piatto = a.getString("immagine");
+                            double prezzo_piatto = Double.parseDouble(a.getString("prezzo"));
                             String fileNameIMGPiatto = immagine_piatto.substring(immagine_piatto.lastIndexOf('/') + 1, immagine_piatto.length());
                             fileNameIMGPiatto = Environment.getExternalStorageDirectory().getAbsoluteFile() + "/appPub/" + fileNameIMGPiatto;
 
-                            Piatto piatto = new Piatto(Integer.parseInt(id_piatto),nome_piatto,descrizione_piatto,fileNameIMGPiatto,2);
+                            Piatto piatto = new Piatto(Integer.parseInt(id_piatto),nome_piatto,descrizione_piatto,fileNameIMGPiatto,prezzo_piatto);
                             new SaveImage().execute(immagine_piatto); // link dell'immagine da aggiungere
                             categoria.aggiungiPiatto(piatto);
                         }
