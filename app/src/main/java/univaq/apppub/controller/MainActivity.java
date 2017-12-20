@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,9 +22,8 @@ import univaq.apppub.util.Network.ServerFacade;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button mButtonEventi;
-    private Button mButtonMenu;
-    private Button mButtonIniziale;
+    private CardView mMenu;
+    private CardView mEventi;
 
     private static boolean First_Opened = false;
 
@@ -84,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
             askPermissions();
         }
 
-        mButtonMenu=(Button) findViewById(R.id.MenuButton);
-        mButtonMenu.setOnClickListener(new View.OnClickListener() {
+        mMenu=(CardView) findViewById(R.id.menuCard);
+        mMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), CategorieActivity.class);
@@ -93,21 +93,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        mButtonEventi=(Button) findViewById(R.id.EventiButton);
-        mButtonEventi.setOnClickListener(new View.OnClickListener() {
+        mEventi=(CardView) findViewById(R.id.eventiCard);
+        mEventi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), EventiActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        mButtonIniziale=(Button) findViewById(R.id.inizialeButton);
-        mButtonIniziale.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), InizialeActivity.class);
                 startActivity(intent);
             }
         });
