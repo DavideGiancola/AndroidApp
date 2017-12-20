@@ -58,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
             // Create channel to show notifications.
             String channelId  = getString(R.string.default_notification_channel_id);
             String channelName = getString(R.string.default_notification_channel_name);
-            NotificationManager notificationManager =
-                    getSystemService(NotificationManager.class);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_LOW));
+
         }
 
         // If a notification message is tapped, any data accompanying the notification
