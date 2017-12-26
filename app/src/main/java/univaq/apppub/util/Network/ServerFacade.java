@@ -62,22 +62,25 @@ public class ServerFacade  {
     }
 
     public void saveImg(String url){
+        SyncronizationTask.getSingletonInstance().addTask();
         new SaveImage().execute(url);
     }
 
     public void getMenuVersion(){
+        SyncronizationTask.getSingletonInstance().addTask();
         new GetJson_MenuVersion().execute("https://appub.herokuapp.com/api/getMenuVersion");
     }
 
-    public void getMenu(){
-        new GetMenu().execute("https://appub.herokuapp.com/api/getMenu");
+    public void getMenu(String version){
+        SyncronizationTask.getSingletonInstance().addTask();
+        new GetMenu().execute("https://appub.herokuapp.com/api/getMenu",version);
     }
 
     public void getSchedarioVersion() {
         new GetJson_SchedarioVersion().execute("https://appub.herokuapp.com/api/getSchedarioVersion"); // !!!!!!!!
     }
 
-    private void getSchedario() { new GetSchedario().execute("https://appub.herokuapp.com/api/getEventi"); } //{"schedario":..... !!!!!!!!!!!!!!!!!!!!!!!!
+    private void getSchedario(String version) { new GetSchedario().execute("https://appub.herokuapp.com/api/getEventi",version); } //{"schedario":..... !!!!!!!!!!!!!!!!!!!!!!!!
 
 
     public class SaveImage extends AsyncTask<String, Void, String> {
@@ -85,18 +88,21 @@ public class ServerFacade  {
             String stringUrl = Url_image;
             HttpURLConnection urlConnection = null;
             String fileName = "";
+            File imgFile = null;
             try {
                 URL url = new URL(stringUrl);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
-                File sdCardRoot = Environment.getExternalStorageDirectory().getAbsoluteFile() ;
+                File sdCardRoot = Environment.getExternalStorageDirectory().getAbsoluteFile();
                 fileName = stringUrl.substring(stringUrl.lastIndexOf('/') + 1, stringUrl.length());
                 String fileNameWithoutExtn = fileName.substring(0, fileName.lastIndexOf('.'));
-                File imgFile = new File(sdCardRoot + "/appPub", fileName);
-                if (!sdCardRoot.exists()) {
+                imgFile = new File(sdCardRoot + "/appPub", fileName);
+                if (!imgFile.exists()) {
                     imgFile.createNewFile();
-                }
+                    System.out.println("Scarico il nuovo File");
+                    System.out.println(fileName);
+
                 InputStream inputStream = urlConnection.getInputStream();
                 int totalSize = urlConnection.getContentLength();
                 FileOutputStream outPut = new FileOutputStream(imgFile);
@@ -110,8 +116,12 @@ public class ServerFacade  {
                 outPut.close();
                 //if (downloadedSize == totalSize);
                 //Toast.makeText(context, "Downloaded" + imgFile.getPath(), Toast.LENGTH_LONG).show();
+
+                }
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Immagine non trovata sul server");
+                //e.printStackTrace();
+                imgFile.delete();
             }
             return fileName;
         }
@@ -123,6 +133,7 @@ public class ServerFacade  {
         @Override
         protected void onPostExecute(String s) {
             System.out.println(s);
+            SyncronizationTask.getSingletonInstance().taskFinished();
         }
     }
 
@@ -152,7 +163,7 @@ public class ServerFacade  {
                 if(Integer.parseInt(MenuVersion) > current_version){
                     System.out.println("versione non aggiornata -- Aggiornamento");
                     helper.onUpgrade(db,current_version,Integer.parseInt(MenuVersion));
-                    getMenu();
+                    getMenu(MenuVersion);
                 }else{
                     System.out.println("versione aggiornata!");
                 }
@@ -164,6 +175,7 @@ public class ServerFacade  {
 
         @Override
         protected void onPostExecute(String result) {
+            SyncronizationTask.getSingletonInstance().taskFinished();
         }
     }
 
@@ -172,6 +184,7 @@ public class ServerFacade  {
         @Override
         protected String doInBackground(String... strings) {
             String stringaJson = null;
+            int version = Integer.parseInt(strings[1]);
             HttpHandler sh = new HttpHandler();
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(strings[0]);
@@ -184,7 +197,7 @@ public class ServerFacade  {
                 }
                 try {
                     JSONArray menu_Json = jsonObj.getJSONArray("menu");
-                    Menu menu = new Menu(0,1);
+                    Menu menu = new Menu(0,version);
 
                     for (int i = 0; i < menu_Json.length(); i++) {
                         JSONObject c = menu_Json.getJSONObject(i);
@@ -198,7 +211,9 @@ public class ServerFacade  {
                         Categoria categoria = new Categoria(Integer.parseInt(id),nome,descrizione,fileNameIMG);
 
 
-                        new SaveImage().execute(immagine); // link immagine categoria
+
+                        saveImg(immagine);
+                       // link immagine categoria
 
                         JSONArray p = c.getJSONArray("piatti");
                         JSONObject a = null;
@@ -213,7 +228,7 @@ public class ServerFacade  {
                             fileNameIMGPiatto = Environment.getExternalStorageDirectory().getAbsoluteFile() + "/appPub/" + fileNameIMGPiatto;
 
                             Piatto piatto = new Piatto(Integer.parseInt(id_piatto),nome_piatto,descrizione_piatto,fileNameIMGPiatto,prezzo_piatto);
-                            new SaveImage().execute(immagine_piatto); // link dell'immagine da aggiungere
+                            saveImg(immagine_piatto); // link dell'immagine da aggiungere
                             categoria.aggiungiPiatto(piatto);
                         }
                         menu.aggiungiCategoria(categoria);
@@ -230,6 +245,10 @@ public class ServerFacade  {
 
             }
             return stringaJson;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            SyncronizationTask.getSingletonInstance().taskFinished();
         }
     }
 
@@ -265,7 +284,7 @@ public class ServerFacade  {
                 if(Integer.parseInt(SchedarioVersion) > current_version){
                     System.out.println("versione non aggiornata -- Aggiornamento");
                     helper.onUpgrade(db,current_version,Integer.parseInt(SchedarioVersion));
-                    getSchedario();
+                    getSchedario(SchedarioVersion);
                 }else{
                     System.out.println("versione aggiornata!");
                 }
@@ -280,6 +299,7 @@ public class ServerFacade  {
         @Override
         protected String doInBackground(String... strings) {
             String stringaJson = null;
+            int schedarioVersion = Integer.parseInt(strings[1]);
             HttpHandler sh = new HttpHandler();
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(strings[0]);
@@ -292,7 +312,7 @@ public class ServerFacade  {
                 }
                 try {
                     JSONArray schedario_Json = jsonObj.getJSONArray("evento"/*"schedario"*/); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    Schedario schedario = new Schedario(0,1);                //{"schedario":..... !!!!!!!!!!!!!!!!!!!!!!!!
+                    Schedario schedario = new Schedario(0,schedarioVersion);                //{"schedario":..... !!!!!!!!!!!!!!!!!!!!!!!!
 
                     for (int i = 0; i < schedario_Json.length(); i++) {
                         JSONObject c = schedario_Json.getJSONObject(i);
@@ -329,7 +349,7 @@ public class ServerFacade  {
             return stringaJson;
         }
     }
-    
+
 }
 
 
