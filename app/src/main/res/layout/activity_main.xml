@@ -39,15 +39,24 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/cover" />
 
+
+            <View
+                android:id="@+id/sfumatura2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/sfumatura"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="138dp"
-                android:layout_height="100dp"
+                android:layout_width="200dp"
+                android:layout_height="78dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:background="@android:drawable/zoom_plate"
+                android:background="@drawable/gradient_card"
                 android:paddingBottom="8dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
@@ -57,12 +66,13 @@
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/viewBg"
-                android:textSize="36sp"
+                android:textSize="44sp"
                 android:textStyle="bold|italic"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/sfumatura2"
+                app:layout_constraintEnd_toEndOf="@+id/sfumatura2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageView2" />
+                app:layout_constraintTop_toTopOf="@+id/sfumatura2" />
+
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>
@@ -97,15 +107,23 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/b" />
 
+            <View
+                android:id="@+id/sfumatura1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/sfumatura"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="148dp"
-                android:layout_height="100dp"
+                android:layout_width="200dp"
+                android:layout_height="74dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:background="@android:drawable/zoom_plate"
+                android:background="@drawable/gradient_card"
                 android:paddingBottom="8dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
@@ -114,12 +132,12 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/viewBg"
-                android:textSize="36sp"
+                android:textSize="44sp"
                 android:textStyle="bold|italic"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/sfumatura1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toTopOf="@+id/imageView3" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/sfumatura1" />
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>
@@ -137,6 +155,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/home" />
+        app:srcCompat="@drawable/montislogo" />
 
 </android.support.constraint.ConstraintLayout>

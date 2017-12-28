@@ -12,15 +12,20 @@
         android:layout_height="match_parent"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:scaleType="centerCrop"
-        tools:layout_editor_absoluteY="100dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient_card"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="76dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/nome_piatto"
@@ -31,6 +36,8 @@
         android:layout_alignParentTop="true"
 
 
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:paddingLeft="@dimen/categoria_nome_padding"
         android:paddingRight="@dimen/categoria_nome_padding"
@@ -39,8 +46,9 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/categorie_title"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@+id/image_piatto_dettaglio"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/image_piatto_dettaglio" />
 
     <TextView
         android:id="@+id/descrizione_piatto"
@@ -49,6 +57,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/nome_piatto"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="nostrum exercitationem ullam corporis suscipit laboriosam,"
         android:textAlignment="center"
@@ -56,8 +66,9 @@
         android:textColor="@color/categorie_title"
         android:textSize="14sp"
         android:textStyle="italic"
-        app:layout_constraintTop_toBottomOf="@+id/nome_piatto"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nome_piatto" />
 
     <TextView
         android:id="@+id/prezzo_piatto"
@@ -67,13 +78,16 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/descrizione_piatto"
 
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:textColor="@color/categorie_title"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@+id/descrizione_piatto"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descrizione_piatto" />
 
     <Button
         android:id="@+id/Aggiunte"
@@ -87,5 +101,19 @@
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/arrow"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/Aggiunte"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:srcCompat="@drawable/arrow" />
 
 </android.support.constraint.ConstraintLayout>

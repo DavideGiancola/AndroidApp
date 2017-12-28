@@ -1,41 +1,28 @@
 package univaq.apppub.controller;
 
-import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.bumptech.glide.Glide;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +30,6 @@ import univaq.apppub.R;
 import univaq.apppub.model.Categoria;
 import univaq.apppub.model.Piatto;
 import univaq.apppub.util.Foundation.MySQLiteHelper;
-import univaq.apppub.util.Network.ServerFacade;
 
 public class PiattiDettaglioActivity extends AppCompatActivity{
 
@@ -53,6 +39,8 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
 
     private int piatto_selezionato;
     private static int categoria_piatto_id;
+
+
 
     private Context context;
 
@@ -64,6 +52,7 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
 
     private static int AggiunteCategoriaId;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,18 +63,13 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
 
         font = Typeface.createFromAsset(getAssets(),"berkshire.ttf");
 
-
-
-
         Bundle extras = getIntent().getExtras();
         piatti = new ArrayList<>();
         categorie = new ArrayList<>();
 
-
         setAggiunteCategoriaid();
-
-
         this.categoria_piatto_id = Integer.parseInt(extras.get("id_categoria").toString());
+
         CostruisciPiatti(Integer.parseInt(extras.get("id_piatto").toString()));
 
         mSectionsPagerAdapter = new PiattiDettaglioActivity.SectionsPagerAdapter(getSupportFragmentManager());
@@ -117,7 +101,6 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
         }
     }
 
-
     private void setAggiunteCategoriaid(){
         MySQLiteHelper db = new MySQLiteHelper(this);
         categorie.addAll(db.getCategorie());
@@ -128,6 +111,7 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
         }
     }
 
+    static boolean firstOpened = true;
 
     public static class PlaceholderFragment extends Fragment {
 
@@ -141,6 +125,9 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
             args.putString("descrizione",piatti.get(sectionNumber).getDescrizione());
             args.putString("img",String.valueOf(piatti.get(sectionNumber).getImg()));
             args.putString("prezzo",String.valueOf(piatti.get(sectionNumber).getPrezzo()));
+            args.putInt("sectionNumber",sectionNumber);
+
+            args.putString("aggiunte",String.valueOf(piatti.get(sectionNumber).isAggiunte()));
 
             fragment.setArguments(args);
             return fragment;
@@ -156,7 +143,11 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
             String nome = args.getString("nome");
             String descrizione = args.getString("descrizione");
             String img = args.getString("img");
-            String prezzo = "Prezzo: " + String.valueOf(args.getString("prezzo"));
+            String prezzo = "Prezzo: " + String.valueOf(args.getString("prezzo")) + "€";
+
+            boolean aggiunte = Boolean.parseBoolean(args.getString("aggiunte"));
+
+            int sectionNumber = args.getInt("sectionNumber");
 
 
             TextView textView_nome = (TextView) rootView.findViewById(R.id.nome_piatto);
@@ -170,20 +161,67 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
             TextView textView_prezzo = (TextView) rootView.findViewById(R.id.prezzo_piatto);
             textView_prezzo.setTypeface(font);
 
+            final ImageView arrow = (ImageView) rootView.findViewById(R.id.arrow);
 
+            if (firstOpened == false){
+                arrow.setVisibility(View.INVISIBLE);
+            }
+            else {
+                arrow.setVisibility(View.VISIBLE);
+                firstOpened = true;
+            }
+
+            if(firstOpened == true) {
+
+                new CountDownTimer(1000, 1000) { // 5000 = 5 sec
+
+                    private void fadeOutAndHideImage(final ImageView img) {
+                        Animation fadeOut = new AlphaAnimation(1, 0);
+                        fadeOut.setInterpolator(new AccelerateInterpolator());
+                        fadeOut.setDuration(800);
+
+                        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+                            public void onAnimationEnd(Animation animation) {
+                                img.setVisibility(View.GONE);
+                            }
+
+                            public void onAnimationRepeat(Animation animation) {
+                            }
+
+                            public void onAnimationStart(Animation animation) {
+                            }
+                        });
+
+                        img.startAnimation(fadeOut);
+                    }
+
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    public void onFinish() {
+                        firstOpened = false;
+                        //arrow.setVisibility(View.INVISIBLE);
+                        fadeOutAndHideImage(arrow);
+                    }
+                }.start();
+
+
+            }
 
 
                 Button aggiunteButton = rootView.findViewById(R.id.Aggiunte);
                 aggiunteButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), PiattiDettaglioActivity.class);
-                        intent.putExtra("id_piatto", String.valueOf(0));
-                        intent.putExtra("id_categoria", AggiunteCategoriaId);
+                        Intent intent = new Intent(getContext(), PiattiActivity.class);
+                        intent.putExtra("name", "Aggiunte");
+                        intent.putExtra("id", AggiunteCategoriaId);
                         startActivity(intent);
+                        firstOpened = true;
                     }
                 });
-            if(categoria_piatto_id == AggiunteCategoriaId) {
+
+            if(!aggiunte) {
                 aggiunteButton.setVisibility(View.INVISIBLE);
             }
 
@@ -199,6 +237,7 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
             return rootView;
         }
     }
+
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -216,5 +255,13 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
             return piatti.size();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        firstOpened = true;
+        super.onBackPressed();
+    }
+
+
 
 }

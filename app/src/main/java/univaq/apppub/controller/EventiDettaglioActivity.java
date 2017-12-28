@@ -128,7 +128,6 @@ public class EventiDettaglioActivity extends AppCompatActivity {
 
             DateParser dateParser = new DateParser();
             Date dataParsificata = dateParser.parsificaData(data);
-            //System.out.println(dateParser.getNomeGiorno()+" "+dateParser.getGiornoDelMese()+" "+dateParser.getNomeMese()+" "+dateParser.getOra()+":"+dateParser.getMinuto());
 
 
             TextView textView_nome = (TextView) rootView.findViewById(R.id.nome_evento);

@@ -62,6 +62,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 "img TEXT," +
                 "id_categoria INTEGER," +
                 "prezzo REAL," +
+                "aggiunte INTEGER," +
                 " FOREIGN KEY(id_categoria) REFERENCES categorie(id))";
 
         String CREATE_TABLE_EVENTI =  "CREATE TABLE eventi(" +
@@ -141,6 +142,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 valuesPiatti.put("img",piatto.getImg());
                 valuesPiatti.put("id_categoria",categoria.getId());
                 valuesPiatti.put("prezzo",piatto.getPrezzo());
+                if(piatto.isAggiunte()){
+                    valuesPiatti.put("aggiunte",1);
+                }else {
+                    valuesPiatti.put("aggiunte",0);
+                }
                 db.insert("piatti",null,valuesPiatti);
                 valuesPiatti.clear();
             }
@@ -256,7 +262,12 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 piatto.setDescrizione(cursor.getString(2));
                 piatto.setImg(cursor.getString(3));
                 piatto.setPrezzo(cursor.getDouble(5));
-
+                int aggiunte = cursor.getInt(6);
+                if (aggiunte == 1){
+                    piatto.setAggiunte(true);
+                }else {
+                    piatto.setAggiunte(false);
+                }
                 piatti.add(piatto);
             } while (cursor.moveToNext());
         }

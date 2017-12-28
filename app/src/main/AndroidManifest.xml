@@ -22,7 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.EventiActivity" />
+        <activity android:name=".controller.EventiActivity"
+            android:theme="@style/Theme.Design.NoActionBar"/>
         <activity android:name=".controller.CategorieActivity" />
         <activity android:name=".controller.PiattiActivity" />
         <activity
@@ -46,7 +47,10 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
 
-        <activity android:name=".controller.MainActivity"></activity>
+        <activity android:name=".controller.MainActivity"
+            android:theme="@style/Theme.Design.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

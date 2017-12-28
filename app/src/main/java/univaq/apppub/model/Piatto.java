@@ -12,15 +12,28 @@ public class Piatto {
     String img;
     double prezzo;
 
-    public Piatto(int id, String nome, String descrizione, String img,double prezzo) {
+
+    boolean aggiunte;
+
+    public Piatto(int id, String nome, String descrizione, String img,double prezzo,boolean aggiunte) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
         this.img = img;
         this.prezzo = prezzo;
+        this.aggiunte = aggiunte;
     }
 
+
     public Piatto() {
+    }
+
+    public boolean isAggiunte() {
+        return aggiunte;
+    }
+
+    public void setAggiunte(boolean aggiunte) {
+        this.aggiunte = aggiunte;
     }
 
     public double getPrezzo() {

@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +38,12 @@ public class EventiActivity extends AppCompatActivity implements EventiAdapter.I
         mList.setAdapter(adapter);
         getEventi();
 
-        /*
-        String s="ven dic 15 01:07:36 2017";
-        DateParser dateParser = new DateParser();
-        Date data = dateParser.parsificaData(s);
-        System.out.println(dateParser.getNomeGiorno()+" "+dateParser.getGiornoDelMese()+" "+dateParser.getNomeMese()+" "+dateParser.getOra()+":"+dateParser.getMinuto());
-        */
+        try {
+            Glide.with(this).load(R.drawable.emotionheader).into((ImageView) findViewById(R.id.backdropEventi));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -51,7 +54,6 @@ public class EventiActivity extends AppCompatActivity implements EventiAdapter.I
 
         eventi.addAll(db.getEventi());
 
-        //System.out.println(eventi.get(0).getNome());
         adapter.notifyDataSetChanged();
 
 

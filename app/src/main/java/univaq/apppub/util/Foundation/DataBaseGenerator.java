@@ -128,7 +128,7 @@ public class DataBaseGenerator {
             String cat = categoria.getNome() +" "+ String.valueOf(i);
             String desc = "Carne di chianina dal nostro macellaio di fiducia e da allevamenti italiani";
             prezzo = prezzo + i;
-            Piatto piatto = new Piatto(i,cat,desc,"",prezzo);
+            Piatto piatto = new Piatto(i,cat,desc,"",prezzo,true);
             categoria.aggiungiPiatto(piatto);
         }
 

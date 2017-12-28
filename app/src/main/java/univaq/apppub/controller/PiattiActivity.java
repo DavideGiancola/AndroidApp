@@ -62,7 +62,6 @@ public class PiattiActivity extends AppCompatActivity implements PiattiAdapter.I
         MySQLiteHelper db = new MySQLiteHelper(this);
         categoria_id = Integer.parseInt(extras.get("id").toString());
         categoria_nome = extras.get("name").toString();
-        System.out.println(categoria_nome);
 
         collapsingToolbarLayout =(CollapsingToolbarLayout) findViewById(R.id.CollapsingToolbar);
         collapsingToolbarLayout.setTitle(categoria_nome);
