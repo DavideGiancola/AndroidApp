@@ -68,19 +68,19 @@ public class ServerFacade  {
 
     public void getMenuVersion(){
         SyncronizationTask.getSingletonInstance().addTask();
-        new GetJson_MenuVersion().execute("https://appub.herokuapp.com/api/getMenuVersion");
+        new GetJson_MenuVersion().execute("http://104.131.188.84/api/getMenuVersion");
     }
 
     public void getMenu(String version){
         SyncronizationTask.getSingletonInstance().addTask();
-        new GetMenu().execute("https://appub.herokuapp.com/api/getMenu",version);
+        new GetMenu().execute("http://104.131.188.84/api/getMenu",version);
     }
 
     public void getSchedarioVersion() {
-        new GetJson_SchedarioVersion().execute("https://appub.herokuapp.com/api/getSchedarioVersion"); // !!!!!!!!
+        new GetJson_SchedarioVersion().execute("http://104.131.188.84/api/getSchedarioVersion"); // !!!!!!!!
     }
 
-    private void getSchedario(String version) { new GetSchedario().execute("https://appub.herokuapp.com/api/getEventi",version); } //{"schedario":..... !!!!!!!!!!!!!!!!!!!!!!!!
+    private void getSchedario(String version) { new GetSchedario().execute("http://104.131.188.84/api/getEventi",version); } //{"schedario":..... !!!!!!!!!!!!!!!!!!!!!!!!
 
 
     public class SaveImage extends AsyncTask<String, Void, String> {
@@ -119,7 +119,7 @@ public class ServerFacade  {
             } catch (IOException e) {
                 System.out.println("Immagine non trovata sul server");
                 //e.printStackTrace();
-                imgFile.delete();
+                //imgFile.delete();
             }
             return fileName;
         }
