@@ -11,16 +11,20 @@ import android.test.SyncBaseInstrumentation;
 
 public class SyncronizationTask {
 
+
+
     public interface SyncronizationTaskInterface {
-
         public void onTasksCompleted();
-
+        public void onTaskCompleded();
     }
+
 
 
     private static SyncronizationTask singletonInstance = null;
 
     private int runningTasks;
+    private int maxNumberOfTask = 0;
+
 
     private SyncronizationTaskInterface listener;
 
@@ -38,18 +42,24 @@ public class SyncronizationTask {
     public void addTask(){
         this.runningTasks++;
         System.out.println("aggiungoTask");
+        this.maxNumberOfTask += 1;
     }
 
     public void taskFinished() {
         System.out.println("rimuovoTask");
+        listener.onTaskCompleded();
         if (--runningTasks == 0) {
             // sbloccco il caricamento
             System.out.println("ho finito tutto");
             if (listener != null)
+                this.maxNumberOfTask = 0;
                 listener.onTasksCompleted();
         }
     }
 
+    public int getMaxNumberOfTask() {
+        return maxNumberOfTask;
+    }
 
     public void setCustomObjectListener(SyncronizationTaskInterface listener) {
         this.listener = listener;

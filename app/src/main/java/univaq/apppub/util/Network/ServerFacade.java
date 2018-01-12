@@ -77,10 +77,13 @@ public class ServerFacade  {
     }
 
     public void getSchedarioVersion() {
+        SyncronizationTask.getSingletonInstance().addTask();
         new GetJson_SchedarioVersion().execute("http://104.131.188.84/api/getSchedarioVersion"); // !!!!!!!!
     }
 
-    private void getSchedario(String version) { new GetSchedario().execute("http://104.131.188.84/api/getEventi",version); } //{"schedario":..... !!!!!!!!!!!!!!!!!!!!!!!!
+    private void getSchedario(String version) {
+        SyncronizationTask.getSingletonInstance().addTask();
+        new GetSchedario().execute("http://104.131.188.84/api/getEventi",version); } //{"schedario":..... !!!!!!!!!!!!!!!!!!!!!!!!
 
 
     public class SaveImage extends AsyncTask<String, Void, String> {
@@ -242,6 +245,7 @@ public class ServerFacade  {
         @Override
         protected void onPostExecute(String result) {
             SyncronizationTask.getSingletonInstance().taskFinished();
+
         }
     }
 
@@ -278,10 +282,12 @@ public class ServerFacade  {
                 }else{
                     System.out.println("versione aggiornata!");
                 }
-
-
             }
             return stringaJson;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            SyncronizationTask.getSingletonInstance().taskFinished();
         }
     }
 
@@ -320,8 +326,7 @@ public class ServerFacade  {
 
                         Evento evento = new Evento(Integer.parseInt(id), nome, data, ora_inizio, ora_fine, descrizione, fileNameIMG);
 
-
-                        new SaveImage().execute(immagine); // link immagine evento
+                        saveImg(immagine);
 
                         schedario.aggiungiEvento(evento);
                     }
@@ -337,6 +342,10 @@ public class ServerFacade  {
 
             }
             return stringaJson;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            SyncronizationTask.getSingletonInstance().taskFinished();
         }
     }
 

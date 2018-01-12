@@ -25,9 +25,6 @@ import univaq.apppub.util.Network.SyncronizationTask;
 
 public class LoadActivity extends AppCompatActivity {
 
-
-    private static boolean First_Opened = false;
-
     private ProgressBar progressBar;
     private TextView messaggioCaricamento;
 
@@ -56,7 +53,7 @@ public class LoadActivity extends AppCompatActivity {
         messaggioCaricamento = (TextView) findViewById(R.id.testoCaricamento);
         progressBar.setVisibility(View.VISIBLE);
 
-        messaggioCaricamento.setText("Stiamo Controllando gli aggiornamenti");
+        messaggioCaricamento.setText("Stiamo controllando gli aggiornamenti");
         ServerFacade.getInstance().setContext(this);
 
         FirebaseMessaging.getInstance().subscribeToTopic("PubNotification");
@@ -87,13 +84,28 @@ public class LoadActivity extends AppCompatActivity {
 
 
         SyncronizationTask.getSingletonInstance().setCustomObjectListener(new SyncronizationTask.SyncronizationTaskInterface() {
+            private int numberOfTaskCompleted = 0;
+            private int maxNumberTask = 0;
+
             @Override
             public void onTasksCompleted() {
-                System.out.println("scaricato tutto Passo alla nuova schermata");
                 messaggioCaricamento.setText("Tutto Aggiornato! Grazie della pazienza");
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
                 startActivity(intent);
+
+            }
+
+            @Override
+            public void onTaskCompleded() {
+                int percentage = 0;
+                maxNumberTask = SyncronizationTask.getSingletonInstance().getMaxNumberOfTask();
+                numberOfTaskCompleted +=1;
+                if(numberOfTaskCompleted != 0 && maxNumberTask != 0) {
+                    percentage = (numberOfTaskCompleted * 100) / maxNumberTask;
+                }
+
+                messaggioCaricamento.setText("Aggiornamento in corso: "+ String.valueOf(percentage)+" %");
 
             }
         });
@@ -103,20 +115,12 @@ public class LoadActivity extends AppCompatActivity {
         if (shouldAskPermissions()) {
             askPermissions();
         } else {
-            if (First_Opened == false) {
-                ServerFacade.getInstance().getMenuVersion();
-                ServerFacade.getInstance().getSchedarioVersion();
-                Toast.makeText(this, "Scaricamento", Toast.LENGTH_LONG).show();
-            }
-            First_Opened = true;
+            ServerFacade.getInstance().getMenuVersion();
+            ServerFacade.getInstance().getSchedarioVersion();
+            Toast.makeText(this, "Scaricamento", Toast.LENGTH_LONG).show();
         }
 
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), "appPub");
-        if (!mediaStorageDir.exists()) {
-            if (!mediaStorageDir.mkdirs()) {
-                Log.d("App", "failed to create directory");
-            }
-        }
+
 
     }
 
@@ -127,12 +131,24 @@ public class LoadActivity extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     System.out.println("Permessi Concessi");
-                    messaggioCaricamento.setText("Stiamo Controllando gli aggiornamenti");
+
+
+                    File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), "appPub");
+                    if (!mediaStorageDir.exists()) {
+                        if (!mediaStorageDir.mkdirs()) {
+                            Log.d("App", "failed to create directory");
+                        }
+                    }
+
                     ServerFacade.getInstance().getMenuVersion();
                     ServerFacade.getInstance().getSchedarioVersion();
 
                 } else {
-
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        finishAffinity();
+                    } else {
+                        finish();
+                    }
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                 }
