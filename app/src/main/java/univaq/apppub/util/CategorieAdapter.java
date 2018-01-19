@@ -1,6 +1,7 @@
 package univaq.apppub.util;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -58,9 +59,12 @@ public class CategorieAdapter extends RecyclerView.Adapter<CategorieAdapter.View
     @Override
     public void onBindViewHolder(final CategorieAdapter.ViewHolder holder, final int position) {
         final Categoria categoria = CategoriaList.get(position);
+        Typeface font;
         holder.mNome.setText(categoria.getNome());
-        System.out.println(categoria.getImg());
+        font = Typeface.createFromAsset(mContext.getAssets(),"berkshire.ttf");
+        holder.mNome.setTypeface(font);
         Glide.with(mContext).load(categoria.getImg()).into(holder.mThumbnail);
+
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

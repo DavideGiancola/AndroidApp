@@ -35,8 +35,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        DataBaseGenerator dataBaseGenerator = new DataBaseGenerator();
-        List<Categoria> categorie ;
 
         String CREATE_TABLE_SCHEDARIO = "CREATE TABLE schedario(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -53,6 +51,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 "descrizione TEXT," +
                 "img TEXT," +
                 "id_menu INTEGER," +
+                "order_categorie INTEGER," +
                 "FOREIGN KEY(id_menu) REFERENCES menu(id))";
 
         String CREATE_TABLE_PIATTI =  "CREATE TABLE piatti(" +
@@ -61,9 +60,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 "descrizione TEXT," +
                 "img TEXT," +
                 "id_categoria INTEGER," +
-                "prezzo REAL," +
+                "prezzo TEXT," +
                 "aggiunte INTEGER," +
-                " FOREIGN KEY(id_categoria) REFERENCES categorie(id))";
+                "order_piatti INTEGER," +
+                "FOREIGN KEY(id_categoria) REFERENCES categorie(id))";
 
         String CREATE_TABLE_EVENTI =  "CREATE TABLE eventi(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -126,12 +126,15 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         List<Categoria> categorie = menu.getCategorie();
 
+
         for (Categoria categoria: categorie) {
+            System.out.println(categoria.getNome());
             valuesCategorie.put("id",categoria.getId());
             valuesCategorie.put("nome",categoria.getNome());
             valuesCategorie.put("descrizione",categoria.getDescrizione());
             valuesCategorie.put("img",categoria.getImg());
             valuesCategorie.put("id_menu",menu.getId());
+            valuesCategorie.put("order_categorie",categoria.getOrder());
             db.insert("categorie",null,valuesCategorie);
             valuesCategorie.clear();
             List<Piatto> piatti = categoria.getPiatti();
@@ -142,6 +145,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 valuesPiatti.put("img",piatto.getImg());
                 valuesPiatti.put("id_categoria",categoria.getId());
                 valuesPiatti.put("prezzo",piatto.getPrezzo());
+                valuesPiatti.put("order_piatti",piatto.getOrder());
                 if(piatto.isAggiunte()){
                     valuesPiatti.put("aggiunte",1);
                 }else {
@@ -153,80 +157,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void addCategorie(SQLiteDatabase db,List<Categoria> categorie){
-
-        // 2. create ContentValues to add key "column"/value
-        ContentValues valuesPiatto = new ContentValues();
-        ContentValues valuesCategorie = new ContentValues();
-
-        for (Categoria categoria:categorie) {
-            valuesCategorie.clear();
-            valuesCategorie.put("nome",categoria.getNome());
-            valuesCategorie.put("descrizione",categoria.getDescrizione());
-            valuesCategorie.put("img",categoria.getImg());
-            db.insert("categorie",null,valuesCategorie);
-            for (Piatto piatto: categoria.getPiatti()) {
-                valuesPiatto.put("nome",piatto.getNome());
-                valuesPiatto.put("descrizione",piatto.getDescrizione());
-                valuesPiatto.put("img",piatto.getImg());
-                valuesPiatto.put("id_categoria",categoria.getId());
-                valuesPiatto.put("prezzo",piatto.getPrezzo());
-                db.insert("piatti",null,valuesPiatto);
-                valuesPiatto.clear();
-            }
-        }
-    }
-
-    public void addEventi(SQLiteDatabase db,List<Evento> eventi){
-
-        // 2. create ContentValues to add key "column"/value
-        ContentValues valuesEvento = new ContentValues();
-
-        for (Evento evento:eventi) {
-            valuesEvento.clear();
-            valuesEvento.put("nome",evento.getNome());
-            valuesEvento.put("data",evento.getData());
-            valuesEvento.put("oraInizio", evento.getOraInizio());
-            valuesEvento.put("oraFine",evento.getOraFine());
-            valuesEvento.put("descrizione",evento.getDescrizione());
-            valuesEvento.put("img",evento.getImg());
-            db.insert("eventi",null,valuesEvento);
-
-        }
-    }
-
-    public void addCategoria(Categoria categoria){
-        //for logging
-        Log.d("addBook", categoria.getNome());
-
-        // 1. get reference to writable DB
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        ContentValues valuesPiatto = new ContentValues();
-
-        values.put("nome", categoria.getNome());
-        values.put("descrizione",categoria.getDescrizione());
-        values.put("img",categoria.getImg());
-        for (Piatto piatto: categoria.getPiatti()) {
-            valuesPiatto.put("nome",piatto.getNome());
-            valuesPiatto.put("descrizione",piatto.getDescrizione());
-            valuesPiatto.put("img",piatto.getImg());
-            db.insert("piatti",null,valuesPiatto);
-            valuesPiatto.clear();
-        }
-
-        db.insert("categorie", null, values);
-
-        // 4. close
-        db.close();
-    }
-
     public List<Categoria> getCategorie(){
         List<Categoria> categorie = new LinkedList<Categoria>();
 
         // 1. build the query
-        String query = "SELECT * FROM categorie" ;
+        String query = "SELECT * FROM categorie ORDER BY order_categorie ASC" ;
         // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -239,6 +174,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 categoria.setNome(cursor.getString(1));
                 categoria.setDescrizione(cursor.getString(2));
                 categoria.setImg(cursor.getString(3));
+                categoria.setOrder(cursor.getInt(5));
                 // Add book to books
                 categorie.add(categoria);
             } while (cursor.moveToNext());
@@ -249,7 +185,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public List<Piatto> getPiatti(int idCategoria){
         List<Piatto> piatti = new ArrayList<>();
 
-        String query = "SELECT * FROM piatti WHERE id_categoria="+idCategoria ;
+        String query = "SELECT * FROM piatti WHERE id_categoria="+idCategoria+" ORDER BY order_piatti ASC" ;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         Piatto piatto = null;
@@ -261,13 +197,14 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 piatto.setNome(cursor.getString(1));
                 piatto.setDescrizione(cursor.getString(2));
                 piatto.setImg(cursor.getString(3));
-                piatto.setPrezzo(cursor.getDouble(5));
+                piatto.setPrezzo(cursor.getString(5));
                 int aggiunte = cursor.getInt(6);
                 if (aggiunte == 1){
                     piatto.setAggiunte(true);
                 }else {
                     piatto.setAggiunte(false);
                 }
+                piatto.setOrder(cursor.getInt(7));
                 piatti.add(piatto);
             } while (cursor.moveToNext());
         }

@@ -1,5 +1,6 @@
 package univaq.apppub.controller;
 
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -34,6 +35,7 @@ public class EventiDettaglioActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private List<Evento> eventi;
     private int posizione_evento_selezionato;
+    private static Typeface font;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class EventiDettaglioActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         eventi = new ArrayList<>();
 
+        font = Typeface.createFromAsset(getAssets(),"berkshire.ttf");
         costruisciEventi(Integer.parseInt(extras.get("id_evento").toString()));
 
         mSectionsPagerAdapter = new EventiDettaglioActivity.SectionsPagerAdapter(getSupportFragmentManager());
@@ -119,6 +122,7 @@ public class EventiDettaglioActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_eventi_dettaglio, container, false);
             Bundle args = getArguments();
 
+
             String nome = args.getString("nome");
             String descrizione = args.getString("descrizione");
             String img = args.getString("img");
@@ -131,13 +135,17 @@ public class EventiDettaglioActivity extends AppCompatActivity {
 
 
             TextView textView_nome = (TextView) rootView.findViewById(R.id.nome_evento);
+            textView_nome.setTypeface(font);
             TextView textView_descrizione = (TextView) rootView.findViewById(R.id.descrizione_evento);
+            textView_descrizione.setTypeface(font);
             ImageView imgView_immagine = (ImageView) rootView.findViewById(R.id.immagine_dettaglio_evento);
 
             TextView textView_giorno = (TextView) rootView.findViewById(R.id.giorno_evento);
             TextView textView_mese = (TextView) rootView.findViewById(R.id.mese_evento);
             TextView textView_ora_inizio = (TextView) rootView.findViewById(R.id.ora_inizio_evento);
+            textView_ora_inizio.setTypeface(font);
             TextView textView_ora_fine = (TextView) rootView.findViewById(R.id.ora_fine_evento);
+            textView_ora_fine.setTypeface(font);
 
 
             textView_nome.setText(nome);

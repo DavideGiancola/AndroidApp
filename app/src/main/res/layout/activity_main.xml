@@ -16,6 +16,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        app:cardBackgroundColor="@color/categorie_title"
         app:cardElevation="0dp"
         app:contentPadding="3dp"
         app:layout_constraintBottom_toTopOf="@+id/eventiCard"
@@ -49,14 +50,13 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/textMenu"
                 android:layout_width="200dp"
                 android:layout_height="78dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/gradient_card"
                 android:paddingBottom="8dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
@@ -65,9 +65,10 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/viewBg"
+                android:textColor="@color/categorie_title"
                 android:textSize="44sp"
                 android:textStyle="bold|italic"
+
                 app:layout_constraintBottom_toBottomOf="@+id/sfumatura2"
                 app:layout_constraintEnd_toEndOf="@+id/sfumatura2"
                 app:layout_constraintStart_toStartOf="parent"
@@ -85,6 +86,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        app:cardBackgroundColor="@color/categorie_title"
         app:contentPadding="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,14 +118,13 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textEventi"
                 android:layout_width="200dp"
                 android:layout_height="74dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/gradient_card"
                 android:paddingBottom="8dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
@@ -131,7 +132,7 @@
                 android:text="@string/eventi"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textColor="@color/viewBg"
+                android:textColor="@color/categorie_title"
                 android:textSize="44sp"
                 android:textStyle="bold|italic"
                 app:layout_constraintBottom_toBottomOf="@+id/sfumatura1"

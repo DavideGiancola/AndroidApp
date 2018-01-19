@@ -2,6 +2,7 @@ package univaq.apppub.controller;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ public class CategorieActivity extends Activity implements CategorieAdapter.Item
     private CategorieAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Categoria> Categorie;
+    private Typeface font;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
 
     @Override
@@ -35,6 +38,11 @@ public class CategorieActivity extends Activity implements CategorieAdapter.Item
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categorie);
 
+        collapsingToolbarLayout =(CollapsingToolbarLayout) findViewById(R.id.CollapsingToolbarMenu);
+        font = Typeface.createFromAsset(getAssets(),"berkshire.ttf");
+
+        collapsingToolbarLayout.setExpandedTitleTypeface(font);
+        collapsingToolbarLayout.setCollapsedTitleTypeface(font);
 
         //initCollapsingToolbar();
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerCategorie);

@@ -1,6 +1,7 @@
 package univaq.apppub.controller;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -57,6 +58,8 @@ public class PiattiActivity extends AppCompatActivity implements PiattiAdapter.I
     }
 
     private void CostruisciPiatti() {
+        Typeface font;
+        font = Typeface.createFromAsset(getAssets(),"berkshire.ttf");
         Bundle extras = getIntent().getExtras();
         // prendi dati dal db
         MySQLiteHelper db = new MySQLiteHelper(this);
@@ -65,6 +68,9 @@ public class PiattiActivity extends AppCompatActivity implements PiattiAdapter.I
 
         collapsingToolbarLayout =(CollapsingToolbarLayout) findViewById(R.id.CollapsingToolbar);
         collapsingToolbarLayout.setTitle(categoria_nome);
+
+        collapsingToolbarLayout.setExpandedTitleTypeface(font);
+        collapsingToolbarLayout.setCollapsedTitleTypeface(font);
 
         Piatti.addAll(db.getPiatti(categoria_id));
         mAdapter.notifyDataSetChanged();

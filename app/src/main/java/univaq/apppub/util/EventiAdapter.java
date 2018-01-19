@@ -1,6 +1,7 @@
 package univaq.apppub.util;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,22 +37,28 @@ public class EventiAdapter extends RecyclerView.Adapter<EventiAdapter.ViewHolder
     @Override
     public EventiAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_eventiadapter, parent, false);
         return new EventiAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(EventiAdapter.ViewHolder holder, int position) {
+
+        Typeface font;
+        font = Typeface.createFromAsset(mContext.getAssets(),"berkshire.ttf");
         final Evento evento = mEventi.get(position);
         holder.nome.setText(mEventi.get(position).getNome());
-
+        holder.nome.setTypeface(font);
 
         DateParser dateParser = new DateParser();
         Date data = dateParser.parsificaData(mEventi.get(position).getData());
         holder.data.setText(dateParser.getNomeGiorno()+" "+dateParser.getGiornoDelMese()+" "+dateParser.getNomeMese());
+        holder.data.setTypeface(font);
         Date oraInizione = dateParser.parsificaData(mEventi.get(position).getOraInizio());
 
         holder.oraInizio.setText("dalle "+dateParser.getOra()+":"+dateParser.getMinuto());
+        holder.oraInizio.setTypeface(font);
         Glide.with(mContext).load(mEventi.get(position).getImg()).into(holder.img);
 
         holder.row.setOnClickListener(new View.OnClickListener() {

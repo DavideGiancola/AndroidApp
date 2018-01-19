@@ -201,12 +201,13 @@ public class ServerFacade  {
                         JSONObject c = menu_Json.getJSONObject(i);
 
                         String id = c.getString("id");
-                        String nome = c.getString("nome");
+                        String nome = c.getString("nome");;
                         String descrizione = c.getString("descrizione");
                         String immagine = c.getString("immagine");
+                        int order_categoria = c.getInt("order");
                         String fileNameIMG = immagine.substring(immagine.lastIndexOf('/') + 1, immagine.length());
                         fileNameIMG = Environment.getExternalStorageDirectory().getAbsoluteFile() + "/appPub/" + fileNameIMG;
-                        Categoria categoria = new Categoria(Integer.parseInt(id),nome,descrizione,fileNameIMG);
+                        Categoria categoria = new Categoria(Integer.parseInt(id),nome,descrizione,fileNameIMG,order_categoria);
 
                         saveImg(immagine);
                        // link immagine categoria
@@ -219,11 +220,12 @@ public class ServerFacade  {
                             String nome_piatto = a.getString("nome");
                             String descrizione_piatto = a.getString("descrizione");
                             String immagine_piatto = a.getString("immagine");
-                            double prezzo_piatto = Double.parseDouble(a.getString("prezzo"));
+                            String prezzo_piatto = a.getString("prezzo");
                             boolean aggiunte = Boolean.parseBoolean(a.getString("aggiunte"));
+                            int order_piatto = a.getInt("order");
                             String fileNameIMGPiatto = immagine_piatto.substring(immagine_piatto.lastIndexOf('/') + 1, immagine_piatto.length());
                             fileNameIMGPiatto = Environment.getExternalStorageDirectory().getAbsoluteFile() + "/appPub/" + fileNameIMGPiatto;
-                            Piatto piatto = new Piatto(Integer.parseInt(id_piatto),nome_piatto,descrizione_piatto,fileNameIMGPiatto,prezzo_piatto,aggiunte);
+                            Piatto piatto = new Piatto(Integer.parseInt(id_piatto),nome_piatto,descrizione_piatto,fileNameIMGPiatto,prezzo_piatto,aggiunte,order_piatto);
                             saveImg(immagine_piatto); // link dell'immagine da aggiungere
                             categoria.aggiungiPiatto(piatto);
                         }

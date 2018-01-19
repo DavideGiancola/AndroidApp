@@ -1,7 +1,10 @@
 package univaq.apppub.controller;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,7 +27,8 @@ public class EventiActivity extends AppCompatActivity implements EventiAdapter.I
     private RecyclerView mList;
     private List<Evento> eventi;
     private EventiAdapter adapter;
-
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private Typeface font;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +41,13 @@ public class EventiActivity extends AppCompatActivity implements EventiAdapter.I
         adapter.setClickListener(this);
         mList.setAdapter(adapter);
         getEventi();
+
+        font = Typeface.createFromAsset(getAssets(),"berkshire.ttf");
+
+        collapsingToolbarLayout = findViewById(R.id.CollapsingToolbarEventi);
+
+        collapsingToolbarLayout.setExpandedTitleTypeface(font);
+        collapsingToolbarLayout.setCollapsedTitleTypeface(font);
 
         try {
             Glide.with(this).load(R.drawable.emotionheader).into((ImageView) findViewById(R.id.backdropEventi));

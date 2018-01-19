@@ -7,4 +7,7 @@
     <color name="viewBg">#f1f5f8</color>
     <color name="categorie_title">#fffbbd</color>
     <color name="card_color">#df464332</color>
+    <color name="name_color">#221e02</color>
+
+    <color name="trasparent">#FFFFFFFF</color>
 </resources>

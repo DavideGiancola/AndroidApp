@@ -13,13 +13,15 @@ public class Categoria {
     private String Descrizione;
     private ArrayList<Piatto> Piatti;
     private String img;
+    private int order;
 
-    public Categoria(int id,String nome, String descrizione, String img) {
+    public Categoria(int id,String nome, String descrizione, String img,int order) {
         this.id = id;
         this.nome = nome;
         Descrizione = descrizione;
         this.img = img;
         this.Piatti = new ArrayList<>();
+        this.order = order;
     }
     public Categoria(){
 
@@ -70,4 +72,11 @@ public class Categoria {
         this.Piatti.add(piatto);
     }
 
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
 }

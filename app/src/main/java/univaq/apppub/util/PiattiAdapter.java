@@ -1,6 +1,7 @@
 package univaq.apppub.util;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,12 +31,15 @@ public class PiattiAdapter extends RecyclerView.Adapter<PiattiAdapter.ViewHolder
         public TextView mNome;
         public ImageView mThumbnail;
         public CardView cardView;
+        private Typeface font;
 
         public ViewHolder(View v) {
             super(v);
             mNome = (TextView) v.findViewById(R.id.nome);
             mThumbnail = (ImageView) v.findViewById(R.id.thumbnail);
             cardView = (CardView) v.findViewById(R.id.card_view);
+            font = Typeface.createFromAsset(mContext.getAssets(),"berkshire.ttf");
+            mNome.setTypeface(font);
         }
 
     }
@@ -45,6 +49,7 @@ public class PiattiAdapter extends RecyclerView.Adapter<PiattiAdapter.ViewHolder
         this.PiattiList = piattoList;
 
     }
+
 
     @Override
     public PiattiAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

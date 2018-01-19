@@ -19,10 +19,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,18 +51,22 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
 
     private List<Piatto> piatti;
 
+
     private List<Categoria> categorie;
+
 
     private static int AggiunteCategoriaId;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piatti_dettaglio);
 
         this.context = this;
         //prendo il font
+
+
 
         font = Typeface.createFromAsset(getAssets(),"berkshire.ttf");
 
@@ -80,9 +87,6 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
         mViewPager.setCurrentItem(piatto_selezionato);
 
         //recupero i dati dalla precedente activity
-
-
-
 
     }
 
@@ -143,7 +147,7 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
             String nome = args.getString("nome");
             String descrizione = args.getString("descrizione");
             String img = args.getString("img");
-            String prezzo = "Prezzo: " + String.valueOf(args.getString("prezzo")) + "€";
+            String prezzo = "Prezzo \n" + String.valueOf(args.getString("prezzo"));
 
             boolean aggiunte = Boolean.parseBoolean(args.getString("aggiunte"));
 
@@ -181,6 +185,8 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
                         fadeOut.setDuration(800);
 
                         fadeOut.setAnimationListener(new Animation.AnimationListener() {
+
+
                             public void onAnimationEnd(Animation animation) {
                                 img.setVisibility(View.GONE);
                             }
@@ -210,6 +216,8 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
 
 
                 Button aggiunteButton = rootView.findViewById(R.id.Aggiunte);
+                aggiunteButton.setTypeface(font);
+                aggiunteButton.setTextColor(getResources().getColor(R.color.categorie_title));
                 aggiunteButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -233,7 +241,37 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
 
             Glide.with(this).load(img).into(imgView);
 
-            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            final ImageView upArrow;
+            final SlidingUpPanelLayout slide;
+            final RelativeLayout panelDescrizione;
+
+            slide = (SlidingUpPanelLayout) rootView.findViewById(R.id.sliding);
+            upArrow= (ImageView) rootView.findViewById(R.id.uparrow);
+
+            panelDescrizione = (RelativeLayout) rootView.findViewById(R.id.descrizioneSlide);
+
+            slide.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+
+
+                @Override
+                public void onPanelSlide(View panel, float slideOffset) {
+
+                    if(slideOffset > 0.1){
+                        upArrow.setImageResource(R.drawable.downarrow);
+                        panelDescrizione.setBackgroundResource(R.drawable.sfondo_trasparente);
+                    }
+                    if(slideOffset < 0.1) {
+                        upArrow.setImageResource(R.drawable.uparrow);
+                        panelDescrizione.setBackgroundResource(R.drawable.gradient_piatti);
+                    }
+                }
+
+                @Override
+                public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+
+                }
+            });
+
             return rootView;
         }
     }

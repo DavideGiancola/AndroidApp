@@ -10,20 +10,21 @@ public class Piatto {
     String nome;
     String descrizione;
     String img;
-    double prezzo;
+    String prezzo;
+
 
 
     boolean aggiunte;
 
-    public Piatto(int id, String nome, String descrizione, String img,double prezzo,boolean aggiunte) {
+    public Piatto(int id, String nome, String descrizione, String img,String prezzo,boolean aggiunte,int order) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
         this.img = img;
         this.prezzo = prezzo;
         this.aggiunte = aggiunte;
+        this.order = order;
     }
-
 
     public Piatto() {
     }
@@ -36,11 +37,11 @@ public class Piatto {
         this.aggiunte = aggiunte;
     }
 
-    public double getPrezzo() {
+    public String getPrezzo() {
         return prezzo;
     }
 
-    public void setPrezzo(double prezzo) {
+    public void setPrezzo(String prezzo) {
         this.prezzo = prezzo;
     }
 
@@ -75,4 +76,15 @@ public class Piatto {
     public void setImg(String img) {
         this.img = img;
     }
+
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    int order;
 }
