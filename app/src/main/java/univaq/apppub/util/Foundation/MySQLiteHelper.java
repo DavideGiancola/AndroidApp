@@ -94,7 +94,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS eventi");
         db.execSQL("DROP TABLE IF EXISTS schedario");
 
-        // create fresh books table
         this.onCreate(db);
     }
 

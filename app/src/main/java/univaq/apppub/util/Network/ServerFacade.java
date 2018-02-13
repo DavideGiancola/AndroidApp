@@ -205,11 +205,15 @@ public class ServerFacade  {
                         String descrizione = c.getString("descrizione");
                         String immagine = c.getString("immagine");
                         int order_categoria = c.getInt("order");
+
+                        // in caso voglio salvare le immagini
                         String fileNameIMG = immagine.substring(immagine.lastIndexOf('/') + 1, immagine.length());
                         fileNameIMG = Environment.getExternalStorageDirectory().getAbsoluteFile() + "/appPub/" + fileNameIMG;
-                        Categoria categoria = new Categoria(Integer.parseInt(id),nome,descrizione,fileNameIMG,order_categoria);
+                        //Categoria categoria = new Categoria(Integer.parseInt(id),nome,descrizione,fileNameIMG,order_categoria);
 
-                        saveImg(immagine);
+                        Categoria categoria = new Categoria(Integer.parseInt(id),nome,descrizione,immagine,order_categoria);
+
+                       // saveImg(immagine);
                        // link immagine categoria
 
                         JSONArray p = c.getJSONArray("piatti");
@@ -223,10 +227,14 @@ public class ServerFacade  {
                             String prezzo_piatto = a.getString("prezzo");
                             boolean aggiunte = Boolean.parseBoolean(a.getString("aggiunte"));
                             int order_piatto = a.getInt("order");
+
+                            // nel caso di salvataggio
                             String fileNameIMGPiatto = immagine_piatto.substring(immagine_piatto.lastIndexOf('/') + 1, immagine_piatto.length());
                             fileNameIMGPiatto = Environment.getExternalStorageDirectory().getAbsoluteFile() + "/appPub/" + fileNameIMGPiatto;
-                            Piatto piatto = new Piatto(Integer.parseInt(id_piatto),nome_piatto,descrizione_piatto,fileNameIMGPiatto,prezzo_piatto,aggiunte,order_piatto);
-                            saveImg(immagine_piatto); // link dell'immagine da aggiungere
+                            //Piatto piatto = new Piatto(Integer.parseInt(id_piatto),nome_piatto,descrizione_piatto,fileNameIMGPiatto,prezzo_piatto,aggiunte,order_piatto);
+                            Piatto piatto = new Piatto(Integer.parseInt(id_piatto),nome_piatto,descrizione_piatto,immagine_piatto,prezzo_piatto,aggiunte,order_piatto);
+
+                            //saveImg(immagine_piatto); // link dell'immagine da aggiungere
                             categoria.aggiungiPiatto(piatto);
                         }
                         menu.aggiungiCategoria(categoria);
@@ -318,17 +326,20 @@ public class ServerFacade  {
                         String id = c.getString("id");
                         String nome = c.getString("titolo");
                         String immagine = c.getString("immagine");  // !!!!!!!!!!!!!!!    https:\/\/appub.herokuapp.com\/storage\/mozzarella.jpg  !!!!!!!!!!!
+                        // nel caso di salvataggio dell immagine
                         String fileNameIMG = immagine.substring(immagine.lastIndexOf('/') + 1, immagine.length());
                         fileNameIMG = Environment.getExternalStorageDirectory().getAbsoluteFile() + "/appPub/" + fileNameIMG;
+
                         String descrizione = c.getString("descrizione");
                         String data = c.getString("data");
                         String ora_inizio = c.getString("ora_inizio");
                         String ora_fine = c.getString("ora_fine");
 
 
-                        Evento evento = new Evento(Integer.parseInt(id), nome, data, ora_inizio, ora_fine, descrizione, fileNameIMG);
+                        //Evento evento = new Evento(Integer.parseInt(id), nome, data, ora_inizio, ora_fine, descrizione, fileNameIMG);
+                        Evento evento = new Evento(Integer.parseInt(id), nome, data, ora_inizio, ora_fine, descrizione, immagine);
 
-                        saveImg(immagine);
+                        //saveImg(immagine);
 
                         schedario.aggiungiEvento(evento);
                     }

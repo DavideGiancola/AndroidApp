@@ -30,6 +30,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/view"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/categoria3" />
 
             <View
@@ -97,11 +98,10 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/descrizioneSlide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/descrizioneSlide"
-        android:background="@drawable/gradient_piatti"
-        >
+        android:background="@drawable/gradient_piatti">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -129,14 +129,29 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="8dp"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Notification"
                 android:textColor="@color/categorie_title"
-                android:textSize="14sp"
+                android:textSize="17sp"
                 android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/DescrizioneLabel" />
+
+            <TextView
+                android:id="@+id/DescrizioneLabel"
+                android:layout_width="251dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="80dp"
+                android:text="Descrizione"
+                android:textAlignment="center"
+                android:textColor="@color/categorie_title"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/uparrow" />
 
@@ -149,6 +164,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/aggiunte_button"
                 android:text="Aggiunte"
+                android:textAllCaps="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/uparrow" />

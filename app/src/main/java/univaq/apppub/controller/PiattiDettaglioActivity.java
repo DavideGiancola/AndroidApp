@@ -162,6 +162,11 @@ public class PiattiDettaglioActivity extends AppCompatActivity{
             TextView textView_descrizione = (TextView) rootView.findViewById(R.id.descrizione_piatto);
             textView_descrizione.setTypeface(font);
 
+            TextView textView_descrizioneLabel = (TextView) rootView.findViewById(R.id.DescrizioneLabel);
+            textView_descrizioneLabel.setTypeface(font);
+
+
+
             TextView textView_prezzo = (TextView) rootView.findViewById(R.id.prezzo_piatto);
             textView_prezzo.setTypeface(font);
 

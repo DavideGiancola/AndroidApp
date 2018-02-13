@@ -16,7 +16,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".controller.LoadActivity"
-            android:theme="@style/Theme.Design.NoActionBar">
+            android:theme="@style/Theme.Design.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -24,15 +25,17 @@
         </activity>
         <activity android:name=".controller.EventiActivity"
             android:theme="@style/Theme.Design.NoActionBar"/>
-        <activity android:name=".controller.CategorieActivity" />
-        <activity android:name=".controller.PiattiActivity" />
+        <activity android:name=".controller.CategorieActivity" android:screenOrientation="portrait" />
+        <activity android:name=".controller.PiattiActivity"  android:screenOrientation="portrait"/>
         <activity
             android:name=".controller.EventiDettaglioActivity"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".controller.PiattiDettaglioActivity"
-            android:theme="@style/Theme.Design.NoActionBar" />
+            android:theme="@style/Theme.Design.NoActionBar"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".util.Network.FireBaseService">
             <intent-filter>
@@ -48,7 +51,8 @@
             android:resource="@color/colorAccent" />
 
         <activity android:name=".controller.MainActivity"
-            android:theme="@style/Theme.Design.NoActionBar">
+            android:theme="@style/Theme.Design.NoActionBar"
+            android:screenOrientation="portrait">
 
         </activity>
     </application>

@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.io.File;
 
 import univaq.apppub.R;
+import univaq.apppub.util.Foundation.MySQLiteHelper;
 import univaq.apppub.util.Network.ServerFacade;
 import univaq.apppub.util.Network.SyncronizationTask;
 
@@ -27,6 +29,7 @@ public class LoadActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
     private TextView messaggioCaricamento;
+    private boolean Scaricamento = false;
 
     protected boolean shouldAskPermissions() {
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
@@ -66,15 +69,6 @@ public class LoadActivity extends AppCompatActivity {
 
         }
 
-        // If a notification message is tapped, any data accompanying the notification
-        // message is available in the intent extras. In this sample the launcher
-        // intent is fired when the notification is tapped, so any accompanying data would
-        // be handled here. If you want a different intent fired, set the click_action
-        // field of the notification message to the desired intent. The launcher intent
-        // is used when no click_action is specified.
-        //
-        // Handle possible data accompanying notification message.
-        // [START handle_data_extras]
         if (getIntent().getExtras() != null) {
             for (String key : getIntent().getExtras().keySet()) {
                 Object value = getIntent().getExtras().get(key);
@@ -82,18 +76,17 @@ public class LoadActivity extends AppCompatActivity {
             }
         }
 
-
         SyncronizationTask.getSingletonInstance().setCustomObjectListener(new SyncronizationTask.SyncronizationTaskInterface() {
             private int numberOfTaskCompleted = 0;
             private int maxNumberTask = 0;
 
             @Override
             public void onTasksCompleted() {
+                Scaricamento = true;
                 messaggioCaricamento.setText("Tutto Aggiornato! Grazie della pazienza");
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
                 startActivity(intent);
-
             }
 
             @Override
@@ -104,25 +97,39 @@ public class LoadActivity extends AppCompatActivity {
                 if(numberOfTaskCompleted != 0 && maxNumberTask != 0) {
                     percentage = (numberOfTaskCompleted * 100) / maxNumberTask;
                 }
-
                 messaggioCaricamento.setText("Aggiornamento in corso: "+ String.valueOf(percentage)+" %");
 
             }
         });
 
-
-
         if (shouldAskPermissions()) {
             askPermissions();
         } else {
+            File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), "appPub");
+            if (!mediaStorageDir.exists()) {
+                if (!mediaStorageDir.mkdirs()) {
+                    Log.d("App", "failed to create directory");
+                }
+            }
             ServerFacade.getInstance().getMenuVersion();
             ServerFacade.getInstance().getSchedarioVersion();
-            Toast.makeText(this, "Scaricamento", Toast.LENGTH_LONG).show();
         }
 
 
 
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(Scaricamento == false) {
+            Log.d("App", "distutto");
+            MySQLiteHelper sql = new MySQLiteHelper(this);
+            SQLiteDatabase db = sql.getWritableDatabase();
+            sql.onUpgrade(db, 0, 0);
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -159,4 +166,8 @@ public class LoadActivity extends AppCompatActivity {
             // permissions this app might request
         }
     }
+
+
+
+
 }
